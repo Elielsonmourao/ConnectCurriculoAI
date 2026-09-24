@@ -1,0 +1,8 @@
+{
+  "name": "Connect_Curriculo_AI",
+  "description": "Plataforma inteligente de elaboração de currículos e otimização de perfil LinkedIn com assistente guiado por IA e banco de dados do mercado.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
