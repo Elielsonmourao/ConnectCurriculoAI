@@ -85,34 +85,34 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
   return (
     <div
-      className={`min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white relative overflow-hidden font-sans transition-colors duration-200 ${
+      className={`min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white relative overflow-hidden font-sans transition-colors duration-200 ${
         isDark
-          ? 'bg-gradient-to-b from-[#003e8f] via-[#064366] to-[#083a48] text-slate-100'
-          : 'bg-gradient-to-b from-[#eff6ff] via-[#e3f0f7] to-[#d3e9f0] text-slate-900'
+          ? 'bg-gradient-to-b from-[#073646] via-[#053e68] to-[#003882] text-slate-100'
+          : 'bg-gradient-to-b from-[#d8ebf2] via-[#e5f1f8] to-[#eff6ff] text-slate-900'
       }`}
     >
       
-      {/* Luz ambiente de fundo (Glows em azul corporativo e azul petróleo suave) */}
-      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 ${isDark ? 'bg-gradient-to-b from-blue-400/15 via-teal-400/10 to-transparent' : 'bg-gradient-to-b from-blue-300/25 via-sky-200/15 to-transparent'} blur-3xl pointer-events-none`} />
-      <div className={`absolute -bottom-20 -left-20 w-80 h-80 ${isDark ? 'bg-teal-500/15' : 'bg-blue-300/20'} rounded-full blur-3xl pointer-events-none`} />
-      <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
+      {/* Luz ambiente de fundo (Glows em azul petróleo suave no topo e azul corporativo na base) */}
+      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 ${isDark ? 'bg-gradient-to-b from-teal-400/20 via-cyan-400/10 to-transparent' : 'bg-gradient-to-b from-teal-300/25 via-sky-200/15 to-transparent'} blur-3xl pointer-events-none`} />
+      <div className={`absolute -bottom-20 -left-20 w-80 h-80 ${isDark ? 'bg-blue-600/20' : 'bg-sky-300/20'} rounded-full blur-3xl pointer-events-none`} />
+      <div className={`absolute -bottom-20 -right-20 w-80 h-80 ${isDark ? 'bg-cyan-500/15' : 'bg-blue-400/15'} rounded-full blur-3xl pointer-events-none`} />
 
       {/* 1. BARRA SUPERIOR DE APLICATIVO (App Bar com Glassmorphism) */}
       <header className={`relative z-20 border-b backdrop-blur-xl sticky top-0 transition-colors ${
-        isDark ? 'border-white/15 bg-[#00367a]/85 text-white' : 'border-blue-200/80 bg-white/90 text-slate-900 shadow-2xs'
+        isDark ? 'border-teal-500/25 bg-[#06313d]/90 text-white' : 'border-blue-200/80 bg-white/90 text-slate-900 shadow-2xs'
       }`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Logo da Aplicação */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <AppLogo size="md" showText={true} isLight={isDark} />
           </div>
 
           {/* Tag de Desenvolvedor e Status do App */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
             {/* Badge de Desenvolvedor */}
-            <div className={`hidden sm:flex items-center gap-2 px-3 py-1 rounded-full text-xs shadow-inner ${
-              isDark ? 'bg-[#002f6c]/90 border border-white/20 text-white' : 'bg-blue-50 border border-blue-200 text-slate-700'
+            <div className={`hidden md:flex items-center gap-2 px-3 py-1 rounded-full text-xs shadow-inner ${
+              isDark ? 'bg-[#052b36]/90 border border-teal-500/30 text-white' : 'bg-blue-50 border border-blue-200 text-slate-700'
             }`}>
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>Desenvolvido por <strong className="font-semibold">Elielson Mourão</strong></span>
@@ -123,14 +123,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               <button
                 type="button"
                 onClick={onToggleTheme}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs active:scale-95 ${
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs active:scale-95 ${
                   isDark
-                    ? 'bg-[#002f6c] hover:bg-[#003982] text-amber-300 border border-white/20'
+                    ? 'bg-[#073c4d] hover:bg-[#09475c] text-teal-200 border border-teal-500/30'
                     : 'bg-white hover:bg-slate-100 text-slate-700 border border-blue-200'
                 }`}
                 title={isDark ? "Ativar Modo Claro" : "Ativar Modo Escuro"}
               >
-                {isDark ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-slate-700" />}
+                {isDark ? <Sun className="w-3.5 h-3.5 text-amber-300" /> : <Moon className="w-3.5 h-3.5 text-slate-700" />}
                 <span className="hidden sm:inline">{isDark ? 'Modo Claro' : 'Modo Escuro'}</span>
               </button>
             )}
@@ -140,15 +140,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               <button
                 type="button"
                 onClick={onViewCV}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer active:scale-95 ${
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer active:scale-95 ${
                   isDark
-                    ? 'text-orange-200 bg-orange-500/15 hover:bg-orange-500/25 border border-orange-500/40'
-                    : 'text-orange-700 bg-orange-50 hover:bg-orange-100 border border-orange-200'
+                    ? 'text-cyan-200 bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40'
+                    : 'text-teal-700 bg-teal-50 hover:bg-teal-100 border border-teal-200'
                 }`}
                 title="Acessar o editor no Modo Visualização direta"
               >
-                <Eye className="w-3.5 h-3.5 text-orange-500" />
-                <span>Modo Visualização</span>
+                <Eye className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="hidden sm:inline">Modo Visualização</span>
+                <span className="sm:hidden">Ver</span>
               </button>
             )}
 
@@ -156,7 +157,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               <button
                 type="button"
                 onClick={onContinue}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-500 hover:to-amber-500 transition-all shadow-md shadow-orange-950/40 border border-orange-400/30 cursor-pointer active:scale-95"
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 transition-all shadow-md shadow-cyan-950/40 border border-cyan-300/30 cursor-pointer active:scale-95"
               >
                 <span>Acessar Editor</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -168,68 +169,68 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       </header>
 
       {/* 2. ÁREA DE TRABALHO PRINCIPAL */}
-      <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full flex flex-col justify-center">
+      <main className="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 py-6 sm:py-10 md:py-12 flex-1 w-full flex flex-col justify-center">
         
         {/* Banner Hero */}
-        <div className="max-w-3xl mx-auto text-center mb-10">
+        <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-10 px-1">
           
-          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 shadow-sm backdrop-blur-md ${
+          <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-3 sm:mb-4 shadow-sm backdrop-blur-md ${
             isDark
-              ? 'bg-white/10 border border-white/20 text-sky-200'
+              ? 'bg-white/10 border border-white/20 text-cyan-200'
               : 'bg-white/90 border border-blue-200 text-blue-900 shadow-sm'
           }`}>
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Sistema Inteligente de Carreira · Conexão com Padrões ATS 2026</span>
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="text-[11px] sm:text-xs">Sistema Inteligente de Carreira · Conexão com Padrões ATS 2026</span>
           </div>
 
-          <h1 className={`text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-4 ${
+          <h1 className={`text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-4 ${
             isDark ? 'text-white' : 'text-slate-900'
           }`}>
             Connect <span className={`text-transparent bg-clip-text bg-gradient-to-r ${
-              isDark ? 'from-sky-200 via-white to-sky-100' : 'from-blue-700 via-blue-800 to-indigo-900'
+              isDark ? 'from-cyan-300 via-white to-sky-200' : 'from-blue-700 via-blue-800 to-indigo-900'
             }`}>Currículo AI</span>
           </h1>
 
-          <p className={`text-sm sm:text-base leading-relaxed max-w-2xl mx-auto ${
+          <p className={`text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto ${
             isDark ? 'text-blue-100' : 'text-slate-600 font-medium'
           }`}>
             Crie, aperfeiçoe e exporte currículos profissionais de alto impacto, 100% aprovados em robôs de RH (ATS) e sincronizados com as melhores práticas do LinkedIn.
           </p>
 
           {/* Badge de Crédito em Destaque no Mobile */}
-          <div className={`mt-3 sm:hidden text-xs ${isDark ? 'text-blue-200' : 'text-slate-500'}`}>
-            Criado & desenvolvido por <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Elielson Mourão</span>
+          <div className={`mt-3 sm:hidden text-xs ${isDark ? 'text-cyan-200/80' : 'text-slate-500'}`}>
+            Criado & desenvolvido por <span className={`font-bold ${isDark ? 'text-cyan-300' : 'text-slate-900'}`}>Elielson Mourão</span>
           </div>
         </div>
 
-        {/* 3. AS POUCAS OPÇÕES PRINCIPAIS (Cards em Azul Corporativo no Modo Escuro / Branco no Modo Claro com Botões em Laranja Gradiente) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 max-w-4xl mx-auto w-full mb-10">
+        {/* 3. AS OPÇÕES PRINCIPAIS (Cards com Botões Harmonizados em Degradê Ciano/Petróleo/Azul) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 max-w-4xl mx-auto w-full mb-8 sm:mb-10">
           
           {/* CARD 1: CONTINUAR MEU CURRÍCULO (Se houver rascunho salvo) */}
           {hasSavedCV ? (
             <div
-              className={`p-6 rounded-3xl border-2 transition-all duration-200 flex flex-col justify-between group relative overflow-hidden backdrop-blur-md ${
+              className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-200 flex flex-col justify-between group relative overflow-hidden backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#003c84]/95 to-[#073646]/95 border-orange-500/80 hover:border-orange-400 shadow-2xl shadow-slate-950/50'
-                  : 'bg-white/95 border-orange-500 hover:border-orange-400 shadow-xl shadow-blue-900/10'
+                  ? 'bg-gradient-to-br from-[#053a4b]/95 to-[#00376d]/95 border-cyan-500/70 hover:border-cyan-400 shadow-2xl shadow-slate-950/50'
+                  : 'bg-white/95 border-teal-500 hover:border-teal-600 shadow-xl shadow-teal-950/10'
               }`}
             >
-              <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[10px] font-extrabold px-3.5 py-1 rounded-bl-xl uppercase tracking-wider shadow-md">
+              <div className="absolute top-0 right-0 bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-600 text-white text-[10px] font-extrabold px-3.5 py-1 rounded-bl-xl uppercase tracking-wider shadow-md">
                 Rascunho Ativo
               </div>
 
               <div>
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-inner ${
-                  isDark ? 'bg-orange-500/20 border border-orange-500/40 text-orange-400' : 'bg-orange-100 border border-orange-200 text-orange-600'
+                  isDark ? 'bg-cyan-500/20 border border-cyan-400/40 text-cyan-300' : 'bg-teal-50 border border-teal-200 text-teal-700'
                 }`}>
                   <Edit3 className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-lg font-bold mb-1 group-hover:text-orange-400 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-cyan-300 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Continuar Edição</span>
-                  <ArrowRight className="w-4 h-4 text-orange-400 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 text-cyan-400 transition-transform group-hover:translate-x-1" />
                 </h2>
 
                 <p className={`text-xs leading-relaxed mb-4 ${
@@ -240,11 +241,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
                 {/* Perfil do Candidato Ativo */}
                 <div className={`rounded-2xl p-3 border flex items-center justify-between ${
-                  isDark ? 'bg-[#052f3f]/85 border-white/15' : 'bg-blue-50/70 border-blue-200'
+                  isDark ? 'bg-[#042835]/85 border-teal-500/25' : 'bg-blue-50/70 border-blue-200'
                 }`}>
                   <div className="flex items-center gap-2.5 truncate pr-2">
                     <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold text-xs ${
-                      isDark ? 'bg-orange-500/25 border border-orange-500/40 text-orange-300' : 'bg-orange-100 border border-orange-200 text-orange-700'
+                      isDark ? 'bg-cyan-500/25 border border-cyan-400/40 text-cyan-200' : 'bg-teal-100 border border-teal-200 text-teal-800'
                     }`}>
                       {savedCandidateName ? savedCandidateName.charAt(0).toUpperCase() : <User className="w-4 h-4" />}
                     </div>
@@ -255,7 +256,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                         {savedCandidateName || 'Candidato em Andamento'}
                       </span>
                       <span className={`text-[11px] block truncate ${
-                        isDark ? 'text-blue-200' : 'text-blue-700 font-medium'
+                        isDark ? 'text-cyan-200' : 'text-blue-700 font-medium'
                       }`}>
                         {savedCandidateRole || 'Cargo Pretendido'}
                       </span>
@@ -263,7 +264,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   </div>
 
                   <div className={`shrink-0 text-right pl-2 border-l ${
-                    isDark ? 'border-white/15' : 'border-blue-200'
+                    isDark ? 'border-teal-500/25' : 'border-blue-200'
                   }`}>
                     <span className={`text-[10px] block font-medium ${
                       isDark ? 'text-blue-200' : 'text-slate-500'
@@ -275,14 +276,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 </div>
               </div>
 
-              {/* Botões de Ação do Rascunho em Tom Laranjado Gradiente */}
-              <div className={`mt-5 pt-3 border-t flex flex-wrap items-center gap-2 ${
+              {/* Botões de Ação do Rascunho em Tom Harmonioso Azul/Ciano */}
+              <div className={`mt-5 pt-3 border-t flex flex-col sm:flex-row items-stretch sm:items-center gap-2 ${
                 isDark ? 'border-white/15' : 'border-slate-200'
               }`}>
                 <button
                   type="button"
                   onClick={onContinue}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-500 hover:to-amber-500 text-white text-xs font-bold shadow-md shadow-orange-950/30 border border-orange-400/30 transition-all cursor-pointer active:scale-95"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-md shadow-cyan-950/40 border border-cyan-300/30 transition-all cursor-pointer active:scale-95"
                 >
                   <span>Continuar Edição</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -294,12 +295,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     onClick={onViewCV}
                     className={`flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-bold transition-all cursor-pointer active:scale-95 ${
                       isDark
-                        ? 'bg-orange-500/15 hover:bg-orange-500/25 border border-orange-500/40 text-orange-200'
-                        : 'bg-orange-50 hover:bg-orange-100 border border-orange-200 text-orange-700'
+                        ? 'bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40 text-cyan-200'
+                        : 'bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-700'
                     }`}
                     title="Abrir diretamente no Modo Visualização"
                   >
-                    <Eye className="w-3.5 h-3.5 text-orange-500" />
+                    <Eye className="w-3.5 h-3.5 text-cyan-400" />
                     <span>Modo Visualização</span>
                   </button>
                 )}
@@ -309,24 +310,24 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             // Card 1 Alternativo (Se não houver rascunho anterior)
             <div
               onClick={onStartNew}
-              className={`p-6 rounded-3xl border-2 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
+              className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#003c84]/95 to-[#073646]/95 border-orange-500/80 hover:border-orange-400 shadow-2xl shadow-slate-950/50'
-                  : 'bg-white/95 border-orange-500 hover:border-orange-400 shadow-xl shadow-blue-900/10'
+                  ? 'bg-gradient-to-br from-[#053a4b]/95 to-[#00376d]/95 border-cyan-500/70 hover:border-cyan-400 shadow-2xl shadow-slate-950/50'
+                  : 'bg-white/95 border-teal-500 hover:border-teal-600 shadow-xl shadow-teal-950/10'
               }`}
             >
               <div>
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-inner ${
-                  isDark ? 'bg-orange-500/20 border border-orange-500/40 text-orange-400' : 'bg-orange-100 border border-orange-200 text-orange-600'
+                  isDark ? 'bg-cyan-500/20 border border-cyan-400/40 text-cyan-300' : 'bg-teal-50 border border-teal-200 text-teal-700'
                 }`}>
                   <FilePlus className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-lg font-bold mb-1 group-hover:text-orange-400 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-cyan-300 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Criar Novo Currículo</span>
-                  <ArrowRight className="w-4 h-4 text-orange-400 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 text-cyan-400 transition-transform group-hover:translate-x-1" />
                 </h2>
 
                 <p className={`text-xs leading-relaxed ${
@@ -342,12 +343,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <button
                   type="button"
                   onClick={onStartNew}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-md shadow-orange-950/30 border border-orange-400/30 transition-all cursor-pointer active:scale-95"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-cyan-950/40 border border-cyan-300/30 transition-all cursor-pointer active:scale-95"
                 >
                   <span>Começar Agora</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-                <span className={`text-[11px] font-medium ${isDark ? 'text-blue-200' : 'text-blue-600'}`}>100% Guiado</span>
+                <span className={`text-[11px] font-medium ${isDark ? 'text-cyan-200' : 'text-teal-700'}`}>100% Guiado</span>
               </div>
             </div>
           )}
@@ -356,25 +357,25 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           {hasSavedCV ? (
             <div
               onClick={onStartNew}
-              className={`p-6 rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
+              className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#003774]/85 to-[#073545]/85 hover:from-[#004288]/90 hover:to-[#084054]/90 border-white/15 hover:border-orange-400/60 shadow-lg shadow-slate-950/40'
-                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-orange-400/60 shadow-lg shadow-blue-900/5'
+                  ? 'bg-gradient-to-br from-[#06313d]/85 to-[#00326b]/85 hover:from-[#083c4b]/90 hover:to-[#003d80]/90 border-white/15 hover:border-cyan-400/60 shadow-lg shadow-slate-950/40'
+                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-teal-400/60 shadow-lg shadow-blue-900/5'
               }`}
             >
               <div>
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform ${
-                  isDark ? 'bg-[#002f6c] border border-white/20 text-blue-100' : 'bg-blue-50 border border-blue-200 text-blue-700'
+                  isDark ? 'bg-[#052b36] border border-teal-500/30 text-teal-200' : 'bg-blue-50 border border-blue-200 text-blue-700'
                 }`}>
                   <FilePlus className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-lg font-bold mb-1 group-hover:text-orange-400 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-cyan-300 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Iniciar Novo do Zero</span>
                   <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                    isDark ? 'text-blue-200 group-hover:text-orange-400' : 'text-slate-400 group-hover:text-orange-500'
+                    isDark ? 'text-blue-200 group-hover:text-cyan-300' : 'text-slate-400 group-hover:text-teal-600'
                   }`} />
                 </h2>
 
@@ -391,21 +392,21 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <button
                   type="button"
                   onClick={onStartNew}
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-xs shadow-sm shadow-orange-950/30 transition-all cursor-pointer active:scale-95"
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-500 hover:via-cyan-500 hover:to-blue-500 text-white font-bold text-xs shadow-sm shadow-cyan-950/30 border border-cyan-400/20 transition-all cursor-pointer active:scale-95"
                 >
                   <span>Iniciar em Branco</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-                <span className={`text-[11px] font-medium ${isDark ? 'text-blue-200' : 'text-slate-500'}`}>Em Branco</span>
+                <span className={`text-[11px] font-medium ${isDark ? 'text-cyan-200' : 'text-slate-500'}`}>Em Branco</span>
               </div>
             </div>
           ) : (
             <div
               onClick={onLoadExample}
-              className={`p-6 rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
+              className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#003774]/85 to-[#073545]/85 hover:from-[#004288]/90 hover:to-[#084054]/90 border-white/15 hover:border-orange-400/60 shadow-lg shadow-slate-950/40'
-                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-orange-400/60 shadow-lg shadow-blue-900/5'
+                  ? 'bg-gradient-to-br from-[#06313d]/85 to-[#00326b]/85 hover:from-[#083c4b]/90 hover:to-[#003d80]/90 border-white/15 hover:border-emerald-400/60 shadow-lg shadow-slate-950/40'
+                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-emerald-400/60 shadow-lg shadow-blue-900/5'
               }`}
             >
               <div>
@@ -415,7 +416,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   <FileCheck className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-lg font-bold mb-1 group-hover:text-emerald-500 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-emerald-400 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Carregar Exemplo Pronto</span>
@@ -437,7 +438,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <button
                   type="button"
                   onClick={onLoadExample}
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-xs shadow-sm shadow-orange-950/30 transition-all cursor-pointer active:scale-95"
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500 text-white font-bold text-xs shadow-sm shadow-teal-950/30 border border-teal-400/20 transition-all cursor-pointer active:scale-95"
                 >
                   <span>Ver Modelo Pronto</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -451,10 +452,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           {hasSavedCV && (
             <div
               onClick={onLoadExample}
-              className={`p-6 rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
+              className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#003774]/85 to-[#073545]/85 hover:from-[#004288]/90 hover:to-[#084054]/90 border-white/15 hover:border-orange-400/60 shadow-lg shadow-slate-950/40'
-                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-orange-400/60 shadow-lg shadow-blue-900/5'
+                  ? 'bg-gradient-to-br from-[#06313d]/85 to-[#00326b]/85 hover:from-[#083c4b]/90 hover:to-[#003d80]/90 border-white/15 hover:border-emerald-400/60 shadow-lg shadow-slate-950/40'
+                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-emerald-400/60 shadow-lg shadow-blue-900/5'
               }`}
             >
               <div>
@@ -464,7 +465,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   <FileCheck className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-lg font-bold mb-1 group-hover:text-emerald-500 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-emerald-400 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Carregar Exemplo Pronto</span>
@@ -486,7 +487,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <button
                   type="button"
                   onClick={onLoadExample}
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-xs shadow-sm shadow-orange-950/30 transition-all cursor-pointer active:scale-95"
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500 text-white font-bold text-xs shadow-sm shadow-teal-950/30 border border-teal-400/20 transition-all cursor-pointer active:scale-95"
                 >
                   <span>Modelo de Referência</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -499,10 +500,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           {/* CARD 4: IMPORTAR ARQUIVO DE BACKUP (.JSON) */}
           <div
             onClick={handleTriggerUpload}
-            className={`p-6 rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
+            className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
               isDark
-                ? 'bg-gradient-to-br from-[#003774]/85 to-[#073545]/85 hover:from-[#004288]/90 hover:to-[#084054]/90 border-white/15 hover:border-orange-400/60 shadow-lg shadow-slate-950/40'
-                : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-orange-400/60 shadow-lg shadow-blue-900/5'
+                ? 'bg-gradient-to-br from-[#06313d]/85 to-[#00326b]/85 hover:from-[#083c4b]/90 hover:to-[#003d80]/90 border-white/15 hover:border-purple-400/60 shadow-lg shadow-slate-950/40'
+                : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-purple-400/60 shadow-lg shadow-blue-900/5'
             }`}
           >
             <div>
@@ -512,7 +513,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <Upload className="w-6 h-6" />
               </div>
 
-              <h2 className={`text-lg font-bold mb-1 group-hover:text-purple-400 transition-colors flex items-center gap-2 ${
+              <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-purple-400 transition-colors flex items-center gap-2 ${
                 isDark ? 'text-white' : 'text-slate-900'
               }`}>
                 <span>Importar Arquivo (.JSON)</span>
@@ -534,7 +535,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               <button
                 type="button"
                 onClick={handleTriggerUpload}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-xs shadow-sm shadow-orange-950/30 transition-all cursor-pointer active:scale-95"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-500 hover:via-cyan-500 hover:to-blue-500 text-white font-bold text-xs shadow-sm shadow-cyan-950/30 border border-cyan-400/20 transition-all cursor-pointer active:scale-95"
               >
                 <Upload className="w-3.5 h-3.5" />
                 <span>Restaurar Backup</span>
@@ -554,14 +555,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         </div>
 
         {/* 4. DOCK DE RECURSOS INTEGRADOS (App Mini-Modules) */}
-        <div className="max-w-4xl mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-2">
+        <div className="max-w-4xl mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5 pt-1 sm:pt-2">
           
-          <div className={`flex items-start gap-3 p-4 rounded-2xl transition-colors ${
+          <div className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors ${
             isDark
               ? 'bg-[#06384d]/70 border border-white/15 hover:bg-[#08455e]/80'
               : 'bg-white/90 border border-blue-200/80 hover:bg-white shadow-sm'
           }`}>
-            <div className={`p-2.5 rounded-xl shrink-0 border ${
+            <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 border ${
               isDark ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-emerald-50 text-emerald-600 border-emerald-200'
             }`}>
               <ShieldCheck className="w-4 h-4" />
@@ -574,12 +575,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             </div>
           </div>
 
-          <div className={`flex items-start gap-3 p-4 rounded-2xl transition-colors ${
+          <div className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors ${
             isDark
               ? 'bg-[#06384d]/70 border border-white/15 hover:bg-[#08455e]/80'
               : 'bg-white/90 border border-blue-200/80 hover:bg-white shadow-sm'
           }`}>
-            <div className={`p-2.5 rounded-xl shrink-0 border ${
+            <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 border ${
               isDark ? 'bg-sky-400/20 text-sky-200 border-sky-400/40' : 'bg-sky-50 text-sky-600 border-sky-200'
             }`}>
               <Download className="w-4 h-4" />
@@ -594,20 +595,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
           <div
             onClick={onGoToLinkedInGuide}
-            className={`flex items-start gap-3 p-4 rounded-2xl transition-colors cursor-pointer group ${
+            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors cursor-pointer group ${
               isDark
-                ? 'bg-[#06384d]/70 border border-white/15 hover:border-orange-500/60 hover:bg-[#08455e]/80'
-                : 'bg-white/90 border border-blue-200/80 hover:border-orange-400/80 hover:bg-white shadow-sm'
+                ? 'bg-[#06384d]/70 border border-white/15 hover:border-indigo-400/60 hover:bg-[#08455e]/80'
+                : 'bg-white/90 border border-blue-200/80 hover:border-indigo-400/60 hover:bg-white shadow-sm'
             }`}
           >
-            <div className={`p-2.5 rounded-xl shrink-0 border group-hover:scale-105 transition-transform ${
+            <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 border group-hover:scale-105 transition-transform ${
               isDark ? 'bg-indigo-400/20 text-indigo-200 border-indigo-400/40' : 'bg-indigo-50 text-indigo-600 border-indigo-200'
             }`}>
               <Share2 className="w-4 h-4" />
             </div>
             <div>
               <h3 className={`text-xs font-bold mb-0.5 flex items-center gap-1 ${
-                isDark ? 'text-white group-hover:text-orange-300' : 'text-slate-900 group-hover:text-orange-600'
+                isDark ? 'text-white group-hover:text-indigo-300' : 'text-slate-900 group-hover:text-indigo-600'
               }`}>
                 <span>Guia LinkedIn</span>
                 <ChevronRight className="w-3 h-3 text-indigo-400" />
@@ -620,23 +621,23 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
           <div
             onClick={() => setShowInterviewModal(true)}
-            className={`flex items-start gap-3 p-4 rounded-2xl transition-colors cursor-pointer group shadow-lg ${
+            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors cursor-pointer group shadow-lg ${
               isDark
-                ? 'bg-[#06384d]/70 border border-orange-500/40 hover:border-orange-400 hover:bg-[#08455e]/90 shadow-slate-950/40'
-                : 'bg-white/90 border border-orange-300 hover:border-orange-500 hover:bg-white shadow-orange-950/5'
+                ? 'bg-[#06384d]/70 border border-teal-500/40 hover:border-cyan-400 hover:bg-[#08455e]/90 shadow-slate-950/40'
+                : 'bg-white/90 border border-teal-300 hover:border-teal-500 hover:bg-white shadow-teal-950/5'
             }`}
           >
-            <div className={`p-2.5 rounded-xl shrink-0 border group-hover:scale-105 transition-transform ${
-              isDark ? 'bg-orange-500/20 text-orange-300 border-orange-500/40' : 'bg-orange-50 text-orange-600 border-orange-200'
+            <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 border group-hover:scale-105 transition-transform ${
+              isDark ? 'bg-teal-500/20 text-teal-300 border-teal-500/40' : 'bg-teal-50 text-teal-600 border-teal-200'
             }`}>
               <MessageSquare className="w-4 h-4" />
             </div>
             <div>
               <h3 className={`text-xs font-bold mb-0.5 flex items-center gap-1 ${
-                isDark ? 'text-white group-hover:text-orange-300' : 'text-slate-900 group-hover:text-orange-600'
+                isDark ? 'text-white group-hover:text-cyan-300' : 'text-slate-900 group-hover:text-teal-700'
               }`}>
                 <span>Dicas de Entrevista</span>
-                <ChevronRight className="w-3 h-3 text-orange-400" />
+                <ChevronRight className="w-3 h-3 text-cyan-400" />
               </h3>
               <p className={`text-[11px] leading-tight ${isDark ? 'text-blue-100' : 'text-slate-600'}`}>
                 Perguntas clássicas, respostas STAR e checklist para a vaga.
@@ -646,16 +647,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
         </div>
 
-        {/* Botão de Destaque para Acessar Dicas de Entrevista em Tom Laranjado Gradiente */}
-        <div className="flex justify-center pt-4">
+        {/* Botão de Destaque para Acessar Dicas de Entrevista em Tom Azul/Ciano */}
+        <div className="flex justify-center pt-4 sm:pt-5 w-full">
           <button
             type="button"
             onClick={() => setShowInterviewModal(true)}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-500 hover:to-amber-500 text-white font-black text-xs shadow-xl shadow-orange-950/50 border border-orange-400/30 transition-all cursor-pointer group active:scale-95"
+            className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white font-black text-xs sm:text-sm shadow-xl shadow-cyan-950/50 border border-cyan-300/40 transition-all cursor-pointer group active:scale-95 w-full sm:w-auto text-center"
           >
-            <MessageSquare className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+            <MessageSquare className="w-4 h-4 text-white group-hover:scale-110 transition-transform shrink-0" />
             <span>Acessar Guia & Dicas de Entrevista de Emprego</span>
-            <ArrowRight className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform shrink-0" />
           </button>
         </div>
 
@@ -663,23 +664,23 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* MODAL EXCLUSIVO: DICAS ESTRATÉGICAS PARA ENTREVISTAS DE EMPREGO */}
       {showInterviewModal && (
-        <div className={`fixed inset-0 z-50 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto ${
+        <div className={`fixed inset-0 z-50 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto ${
           isDark ? 'bg-[#031c26]/85' : 'bg-slate-900/60'
         }`}>
-          <div className={`border rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 my-auto ${
+          <div className={`border rounded-2xl sm:rounded-3xl w-full max-w-4xl max-h-[94vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 my-auto ${
             isDark ? 'bg-[#063442] border-white/20 text-white' : 'bg-white border-slate-200 text-slate-900'
           }`}>
             
             {/* Cabeçalho do Modal */}
-            <div className={`p-5 sm:p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0 ${
+            <div className={`p-4 sm:p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shrink-0 ${
               isDark ? 'border-white/15 bg-[#052c38]/95' : 'border-slate-200 bg-slate-50/95'
             }`}>
               <div className="space-y-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-400 text-[11px] font-semibold">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 text-[11px] font-semibold">
                   <MessageSquare className="w-3.5 h-3.5" />
                   <span>Preparação para Processos Seletivos</span>
                 </div>
-                <h2 className={`text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2.5 ${
+                <h2 className={`text-lg sm:text-2xl font-black tracking-tight flex items-center gap-2.5 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Dicas Estratégicas para Entrevistas de Emprego</span>
@@ -699,7 +700,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     if (hasSavedCV) onContinue();
                     else onStartNew();
                   }}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-md shadow-orange-950/40 border border-orange-400/30 transition-all cursor-pointer active:scale-95"
+                  className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-cyan-950/40 border border-cyan-300/30 transition-all cursor-pointer active:scale-95"
                 >
                   <span>{hasSavedCV ? 'Editar Meu Currículo' : 'Criar Currículo Agora'}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -719,7 +720,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             </div>
 
             {/* Conteúdo com Scroll Interno */}
-            <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6">
+            <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-5 sm:space-y-6">
               
               {/* Seletor de Abas da Seção de Entrevista */}
               <div className="flex items-center gap-2 border-b border-blue-900/60 pb-3 overflow-x-auto no-scrollbar">
@@ -728,7 +729,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               onClick={() => setActiveInterviewTab('questions')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                 activeInterviewTab === 'questions'
-                  ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40 shadow-xs'
+                  ? 'bg-cyan-500/20 text-cyan-200 border border-cyan-400/40 shadow-xs'
                   : 'text-slate-300 hover:text-white hover:bg-blue-950/60'
               }`}
             >
@@ -991,27 +992,27 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   )}
 
       {/* 5. RODAPÉ INSTITUCIONAL COM ASSINATURA DO DESENVOLVEDOR */}
-      <footer className={`relative z-20 border-t py-5 text-xs transition-colors ${
-        isDark ? 'border-teal-500/20 bg-[#062833]/95 text-blue-100' : 'border-blue-200/80 bg-white/95 text-slate-600 shadow-xs'
+      <footer className={`relative z-20 border-t py-4 sm:py-5 text-xs transition-colors ${
+        isDark ? 'border-blue-500/20 bg-[#002f6c]/95 text-blue-100' : 'border-blue-200/80 bg-white/95 text-slate-600 shadow-xs'
       }`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           
           <div className="flex items-center gap-2.5">
             <AppLogo size="sm" showText={false} isLight={isDark} />
             <div className={`flex items-center gap-1.5 text-xs ${isDark ? 'text-white' : 'text-slate-800'}`}>
               <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Connect Currículo AI</span>
               <span className={isDark ? "text-blue-300" : "text-slate-400"}>·</span>
-              <span>Desenvolvido por <strong className="text-orange-500 font-semibold">Elielson Mourão</strong></span>
+              <span>Desenvolvido por <strong className="text-cyan-400 font-semibold">Elielson Mourão</strong></span>
             </div>
           </div>
 
-          <div className={`flex items-center gap-4 text-[11px] ${isDark ? 'text-blue-200' : 'text-slate-500'}`}>
+          <div className={`flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 text-[11px] ${isDark ? 'text-blue-200' : 'text-slate-500'}`}>
             <span>Privacidade Local (100% no seu navegador)</span>
             <span className={isDark ? "text-blue-400" : "text-slate-300"}>·</span>
             <button
               type="button"
               onClick={onGoToLinkedInGuide}
-              className="text-orange-500 hover:text-orange-600 transition-colors font-semibold cursor-pointer"
+              className="text-cyan-400 hover:text-cyan-300 transition-colors font-semibold cursor-pointer"
             >
               Otimizador LinkedIn
             </button>

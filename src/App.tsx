@@ -661,15 +661,15 @@ export default function App() {
             >
               {/* Banner do Modo Visualização Ativo */}
               {editorViewMode === 'preview' && (
-                <div className="no-print w-full max-w-[210mm] mx-auto mb-4 p-3.5 bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 text-white rounded-2xl border border-blue-700/60 shadow-lg flex flex-wrap items-center justify-between gap-3">
+                <div className="no-print w-full max-w-[210mm] mx-auto mb-4 p-3.5 bg-gradient-to-r from-[#073646] via-[#053e68] to-[#003882] text-white rounded-2xl border border-teal-500/40 shadow-lg flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-orange-500/20 text-orange-300 border border-orange-400/30">
+                    <div className="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
                       <Eye className="w-5 h-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-black tracking-wide uppercase text-orange-300">Modo de Visualização Ativo</span>
-                        <span className="text-[10px] bg-blue-500/30 text-sky-200 px-2 py-0.5 rounded-full font-bold">Folha A4 Real</span>
+                        <span className="text-xs font-black tracking-wide uppercase text-cyan-300">Modo de Visualização Ativo</span>
+                        <span className="text-[10px] bg-teal-500/30 text-teal-200 px-2 py-0.5 rounded-full font-bold">Folha A4 Real</span>
                       </div>
                       <p className="text-[11px] text-blue-100 mt-0.5">
                         Foco total no currículo para leitura, revisão minuciosa de layout e impressão.
@@ -681,7 +681,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setEditorViewMode('split')}
-                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-md shadow-orange-950/40 border border-orange-400/30 transition-all cursor-pointer active:scale-95"
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-cyan-950/40 border border-cyan-400/30 transition-all cursor-pointer active:scale-95"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       <span>Voltar para Edição</span>
