@@ -4,7 +4,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 
 interface LoadingScreenProps {
   onComplete: () => void;
-  minDurationMs?: number;
+  durationMs?: number;
 }
 
 const LOADING_MESSAGES = [
@@ -17,49 +17,57 @@ const LOADING_MESSAGES = [
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({
   onComplete,
-  minDurationMs = 1400,
+  durationMs = 4000,
 }) => {
-  const [progress, setProgress] = useState<number>(10);
+  const [progress, setProgress] = useState<number>(0);
   const [messageIndex, setMessageIndex] = useState<number>(0);
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
 
   useEffect(() => {
-    // Incremento suave da barra de progresso
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        const step = Math.floor(Math.random() * 15) + 10;
-        return Math.min(100, prev + step);
-      });
-    }, 180);
+    const startTime = performance.now();
+    // 2500ms para progredir de 0% a 100%, 200ms de pausa com 100% e 300ms de fade-out (total = 3000ms)
+    const progressDuration = Math.max(1000, durationMs - 500);
+    let animFrame: number;
+    let fadeTimer: ReturnType<typeof setTimeout>;
+    let exitTimer: ReturnType<typeof setTimeout>;
 
-    // Rotação sutil das mensagens institucionais
-    const messageInterval = setInterval(() => {
-      setMessageIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
-    }, 450);
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const pct = Math.min(100, Math.round((elapsed / progressDuration) * 100));
+      setProgress(pct);
+
+      const msgIdx = Math.min(
+        LOADING_MESSAGES.length - 1,
+        Math.floor((elapsed / progressDuration) * LOADING_MESSAGES.length)
+      );
+      setMessageIndex(msgIdx);
+
+      if (elapsed < progressDuration) {
+        animFrame = requestAnimationFrame(tick);
+      } else {
+        setProgress(100);
+        setMessageIndex(LOADING_MESSAGES.length - 1);
+
+        // Dispara o fade-out após 200ms com 100%
+        fadeTimer = setTimeout(() => {
+          setIsFadingOut(true);
+        }, 200);
+
+        // Conclui a introdução completando exatamente a duração total (3000ms)
+        exitTimer = setTimeout(() => {
+          onComplete();
+        }, 500);
+      }
+    };
+
+    animFrame = requestAnimationFrame(tick);
 
     return () => {
-      clearInterval(interval);
-      clearInterval(messageInterval);
+      cancelAnimationFrame(animFrame);
+      clearTimeout(fadeTimer);
+      clearTimeout(exitTimer);
     };
-  }, []);
-
-  // Quando o progresso atinge 100%, faz fade-out gracioso
-  useEffect(() => {
-    if (progress >= 100) {
-      const timer = setTimeout(() => {
-        setIsFadingOut(true);
-        const exitTimer = setTimeout(() => {
-          onComplete();
-        }, 350);
-        return () => clearTimeout(exitTimer);
-      }, 250);
-      return () => clearTimeout(timer);
-    }
-  }, [progress, onComplete]);
+  }, [durationMs, onComplete]);
 
   return (
     <div

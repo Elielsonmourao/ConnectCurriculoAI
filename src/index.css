@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-slate-50: #f8fafc;
   --color-slate-100: #f1f5f9;
@@ -47,6 +49,96 @@
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
+}
+
+/* ========================================================================= */
+/* SUPORTE AO MODO ESCURO E MODO CLARO (INTERFACE DO CANDIDATO)             */
+/* ========================================================================= */
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #020617;
+  color: #f8fafc;
+}
+
+/* Painéis de formulário, cartões e abas no modo escuro */
+html.dark .no-print .bg-white {
+  background-color: #0f172a !important;
+  color: #f8fafc;
+}
+
+html.dark .no-print input:not([type="checkbox"]):not([type="radio"]),
+html.dark .no-print textarea,
+html.dark .no-print select {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.dark .no-print input::placeholder,
+html.dark .no-print textarea::placeholder {
+  color: #64748b !important;
+}
+
+html.dark .no-print .border-slate-200,
+html.dark .no-print .border-slate-300 {
+  border-color: #334155 !important;
+}
+
+html.dark .no-print .text-slate-900,
+html.dark .no-print .text-slate-800 {
+  color: #f8fafc !important;
+}
+
+html.dark .no-print .text-slate-700,
+html.dark .no-print .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .no-print .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .no-print .bg-slate-50,
+html.dark .no-print .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+html.dark .no-print .bg-slate-200 {
+  background-color: #334155 !important;
+}
+
+html.dark .no-print .bg-slate-200\/70 {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+}
+
+html.dark .no-print .bg-blue-50,
+html.dark .no-print .bg-blue-50\/70,
+html.dark .no-print .bg-blue-50\/60 {
+  background-color: rgba(30, 58, 138, 0.25) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+html.dark .no-print .text-blue-900,
+html.dark .no-print .text-blue-950 {
+  color: #93c5fd !important;
+}
+
+/* ========================================================================= */
+/* PRESERVAÇÃO RIGOROSA DA FOLHA A4 DO CURRÍCULO                            */
+/* A folha A4 física impressa SEMPRE permanece branca com tipografia nítida */
+/* ========================================================================= */
+#cv-printable-area,
+#cv-printable-area * {
+  color-scheme: light !important;
+}
+
+html.dark #cv-printable-area {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
 }
 
 @media print {

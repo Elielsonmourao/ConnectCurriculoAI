@@ -35,10 +35,10 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
     <div className="flex flex-col items-center w-full">
       
       {/* Controles de Visualização da Prévia */}
-      <div className="no-print w-full max-w-[210mm] flex items-center justify-between py-2 px-3 mb-2 bg-white/80 backdrop-blur-xs border border-slate-200 rounded-xl text-xs text-slate-600 shadow-2xs">
+      <div className="no-print w-full max-w-[210mm] flex items-center justify-between py-2 px-3 mb-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-xs border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-600 dark:text-slate-300 shadow-2xs transition-colors">
         <div className="flex items-center gap-2">
-          <span className="font-bold text-slate-800">Visualização em Tempo Real (A4)</span>
-          <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium">
+          <span className="font-bold text-slate-800 dark:text-slate-100">Visualização em Tempo Real (A4)</span>
+          <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-medium">
             {template === 'm-coluna' ? 'Coluna Lateral' : template === 'm-moderno' ? 'Moderno' : 'Clássico ATS'}
           </span>
         </div>
@@ -46,23 +46,23 @@ export const CVPreview: React.FC<CVPreviewProps> = ({ cvData }) => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setZoom((z) => Math.max(0.65, Number((z - 0.05).toFixed(2))))}
-            className="p-1 rounded hover:bg-slate-100 text-slate-600 cursor-pointer"
+            className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-pointer"
             title="Reduzir zoom"
           >
             <ZoomOut className="w-3.5 h-3.5" />
           </button>
-          <span className="w-10 text-center font-mono text-[11px]">{Math.round(zoom * 100)}%</span>
+          <span className="w-10 text-center font-mono text-[11px] font-semibold">{Math.round(zoom * 100)}%</span>
           <button
             onClick={() => setZoom((z) => Math.min(1.15, Number((z + 0.05).toFixed(2))))}
-            className="p-1 rounded hover:bg-slate-100 text-slate-600 cursor-pointer"
+            className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-pointer"
             title="Aumentar zoom"
           >
             <ZoomIn className="w-3.5 h-3.5" />
           </button>
-          <div className="h-4 w-px bg-slate-200 mx-1" />
+          <div className="h-4 w-px bg-slate-200 dark:bg-slate-700 mx-1" />
           <button
             onClick={() => setIsFullWidth(!isFullWidth)}
-            className="p-1 rounded hover:bg-slate-100 text-slate-600 cursor-pointer"
+            className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-pointer"
             title={isFullWidth ? "Visualização Padrão" : "Expandir Prévia"}
           >
             {isFullWidth ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}

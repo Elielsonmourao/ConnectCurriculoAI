@@ -18,11 +18,39 @@ import { Step8LinkedInGuide } from './components/steps/Step8LinkedInGuide';
 import { CVPreview } from './components/CVPreview';
 import { exportCVToPDF, printCVSafely } from './utils/pdfExport';
 import { exportCVToWord } from './utils/wordExport';
-import { ArrowLeft, ArrowRight, Download, Home, Sparkles, MessageSquare } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, Home, Sparkles, MessageSquare, Eye, Edit3, Columns } from 'lucide-react';
+
+export type EditorViewMode = 'split' | 'preview' | 'editor';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentView, setCurrentView] = useState<'home' | 'editor'>('home');
+  const [editorViewMode, setEditorViewMode] = useState<EditorViewMode>('split');
+
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('curriculo_ia_theme');
+    if (saved === 'light' || saved === 'dark') {
+      return saved;
+    }
+    return 'dark';
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('curriculo_ia_theme', theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (e) {
+      console.warn('Falha ao sincronizar tema com storage:', e);
+    }
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   const [cvData, setCvData] = useState<CVData>(() => {
     const saved = localStorage.getItem('curriculo_ia_cv_data');
@@ -239,6 +267,9 @@ export default function App() {
   const handlePrint = () => {
     setIsPrinting(true);
     try {
+      if (editorViewMode === 'editor') {
+        setEditorViewMode('split');
+      }
       if (!showMobilePreview) {
         setShowMobilePreview(true);
       }
@@ -329,16 +360,24 @@ export default function App() {
   const handleStartNew = () => {
     setCvData(BLANK_CV_DATA);
     setCurrentStep(1);
+    setEditorViewMode('split');
     setCurrentView('editor');
   };
 
   const handleContinue = () => {
+    setEditorViewMode('split');
+    setCurrentView('editor');
+  };
+
+  const handleOpenViewMode = () => {
+    setEditorViewMode('preview');
     setCurrentView('editor');
   };
 
   const handleLoadExample = () => {
     setCvData(INITIAL_CV_DATA);
     setCurrentStep(1);
+    setEditorViewMode('split');
     setCurrentView('editor');
   };
 
@@ -357,7 +396,7 @@ export default function App() {
     <>
       {/* 1. TELA DE CARREGAMENTO INICIAL COM A LOGO EXCLUSIVA */}
       {isLoading && (
-        <LoadingScreen onComplete={() => setIsLoading(false)} />
+        <LoadingScreen onComplete={() => setIsLoading(false)} durationMs={4000} />
       )}
 
       {/* 2. TELA DE HOME COM POUCAS OPÇÕES DIRETAS */}
@@ -365,20 +404,26 @@ export default function App() {
         <HomeScreen
           onStartNew={handleStartNew}
           onContinue={handleContinue}
+          onViewCV={handleOpenViewMode}
           onLoadExample={handleLoadExample}
           onImportJSON={handleImportJSON}
           onGoToLinkedInGuide={() => {
             setCurrentStep(8);
+            setEditorViewMode('split');
             setCurrentView('editor');
           }}
           hasSavedCV={hasSavedCV}
           savedCandidateName={cvData.fullName}
           savedCandidateRole={cvData.roleHeadline || cvData.targetRole}
           atsScore={atsScore.score}
+          theme={theme}
+          onToggleTheme={handleToggleTheme}
         />
       ) : (
         /* 3. TELA DO EDITOR COMPLETO DE CURRÍCULO & LINKEDIN */
-        <div className="min-h-screen bg-slate-100 flex flex-col font-sans text-slate-900">
+        <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
+          theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-100 text-slate-900'
+        }`}>
           
           {/* CABEÇALHO GLOBAL */}
           <Header
@@ -389,19 +434,39 @@ export default function App() {
             onDownloadDoc={handleDownloadDoc}
             onReset={handleReset}
             isAiOnline={isAiOnline}
-            onToggleMobilePreview={() => setShowMobilePreview(!showMobilePreview)}
-            showMobilePreview={showMobilePreview}
+            onToggleMobilePreview={() => {
+              if (editorViewMode === 'preview') {
+                setEditorViewMode('editor');
+              } else {
+                setEditorViewMode('preview');
+              }
+            }}
+            showMobilePreview={editorViewMode === 'preview'}
             onGoHome={handleGoHome}
+            editorViewMode={editorViewMode}
+            onChangeViewMode={setEditorViewMode}
+            theme={theme}
+            onToggleTheme={handleToggleTheme}
           />
 
           {/* BARRA DE NAVEGAÇÃO DOS PASSOS (1 a 8) */}
-          <StepTabs currentStep={currentStep} onSelectStep={handleGoToStep} />
+          <StepTabs currentStep={currentStep} onSelectStep={handleGoToStep} theme={theme} />
 
-          {/* ÁREA DE TRABALHO DIVIDIDA (EDITOR LATERAL + PRÉVIA EM TEMPO REAL) */}
+          {/* ÁREA DE TRABALHO (EDITOR LATERAL + PRÉVIA EM TEMPO REAL) */}
           <div className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 flex flex-col lg:flex-row gap-6 items-start">
             
             {/* PAINEL DO EDITOR LATERAL (Esquerda) */}
-            <div className={`w-full lg:w-[48%] flex flex-col space-y-5 no-print ${showMobilePreview ? 'hidden lg:flex' : 'flex'}`}>
+            <div
+              className={`w-full flex flex-col space-y-5 no-print ${
+                editorViewMode === 'preview'
+                  ? 'hidden'
+                  : editorViewMode === 'editor'
+                  ? 'max-w-4xl mx-auto flex'
+                  : showMobilePreview
+                  ? 'hidden lg:flex lg:w-[48%]'
+                  : 'flex lg:w-[48%]'
+              }`}
+            >
               
               {/* Âncora invisível para rolagem imediata ao topo */}
               <div id="editor-panel-top" className="scroll-mt-6" />
@@ -411,7 +476,9 @@ export default function App() {
                 <button
                   type="button"
                   onClick={handleGoHome}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-700 transition-colors cursor-pointer"
+                  className={`inline-flex items-center gap-1.5 text-xs font-semibold transition-colors cursor-pointer ${
+                    theme === 'dark' ? 'text-slate-400 hover:text-blue-400' : 'text-slate-500 hover:text-blue-700'
+                  }`}
                 >
                   <Home className="w-3.5 h-3.5" />
                   <span>Voltar para a Página Inicial</span>
@@ -519,18 +586,24 @@ export default function App() {
               </div>
 
               {/* Navegação Inferior (Anterior / Próximo) */}
-              <div className="no-print pt-4 flex items-center justify-between border-t border-slate-200">
+              <div className={`no-print pt-4 flex items-center justify-between border-t ${
+                theme === 'dark' ? 'border-slate-800' : 'border-slate-200'
+              }`}>
                 <button
                   type="button"
                   onClick={() => handleGoToStep(Math.max(1, currentStep - 1))}
                   disabled={currentStep === 1}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 transition-colors disabled:opacity-40 disabled:pointer-events-none cursor-pointer shadow-2xs"
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border transition-colors disabled:opacity-40 disabled:pointer-events-none cursor-pointer shadow-2xs ${
+                    theme === 'dark'
+                      ? 'bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700'
+                      : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
+                  }`}
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Etapa Anterior</span>
                 </button>
 
-                <span className="text-xs font-semibold text-slate-500">
+                <span className={`text-xs font-semibold ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>
                   Passo {currentStep} de 8 {currentStep === 8 && '(Opcional)'}
                 </span>
 
@@ -561,7 +634,11 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => handleGoToStep(7)}
-                    className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 transition-colors cursor-pointer shadow-2xs"
+                    className={`flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer shadow-2xs ${
+                      theme === 'dark'
+                        ? 'bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700'
+                        : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
+                    }`}
                   >
                     <span>Voltar ao Download</span>
                   </button>
@@ -570,9 +647,62 @@ export default function App() {
 
             </div>
 
-            {/* PAINEL DA PRÉVIA VISUAL EM TEMPO REAL (Direita) */}
-            <div className={`w-full lg:w-[52%] sticky top-20 cv-preview-column ${!showMobilePreview ? 'hidden lg:block' : 'block'}`}>
-              <div className="bg-slate-200/70 p-3 sm:p-5 rounded-3xl border border-slate-300/80 shadow-inner">
+            {/* PAINEL DA PRÉVIA VISUAL EM TEMPO REAL (Direita ou Centralizado na Visualização) */}
+            <div
+              className={`w-full cv-preview-column ${
+                editorViewMode === 'editor'
+                  ? 'hidden'
+                  : editorViewMode === 'preview'
+                  ? 'max-w-4xl mx-auto block'
+                  : !showMobilePreview
+                  ? 'hidden lg:block lg:w-[52%] sticky top-20'
+                  : 'block lg:w-[52%] sticky top-20'
+              }`}
+            >
+              {/* Banner do Modo Visualização Ativo */}
+              {editorViewMode === 'preview' && (
+                <div className="no-print w-full max-w-[210mm] mx-auto mb-4 p-3.5 bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 text-white rounded-2xl border border-blue-700/60 shadow-lg flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-orange-500/20 text-orange-300 border border-orange-400/30">
+                      <Eye className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black tracking-wide uppercase text-orange-300">Modo de Visualização Ativo</span>
+                        <span className="text-[10px] bg-blue-500/30 text-sky-200 px-2 py-0.5 rounded-full font-bold">Folha A4 Real</span>
+                      </div>
+                      <p className="text-[11px] text-blue-100 mt-0.5">
+                        Foco total no currículo para leitura, revisão minuciosa de layout e impressão.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setEditorViewMode('split')}
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-md shadow-orange-950/40 border border-orange-400/30 transition-all cursor-pointer active:scale-95"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>Voltar para Edição</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleDownloadPDF}
+                      disabled={isGeneratingPDF}
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Baixar PDF</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <div className={`p-3 sm:p-5 rounded-3xl border shadow-inner transition-colors ${
+                theme === 'dark' ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-200/70 border-slate-300/80'
+              }`}>
                 <CVPreview cvData={cvData} />
               </div>
             </div>
