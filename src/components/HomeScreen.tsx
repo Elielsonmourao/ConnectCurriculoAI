@@ -155,17 +155,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <span className="sm:hidden">Ver</span>
               </button>
             )}
-
-            {hasSavedCV && (
-              <button
-                type="button"
-                onClick={onContinue}
-                className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 transition-all shadow-md shadow-blue-500/25 border border-sky-300/30 cursor-pointer active:scale-95"
-              >
-                <span>Acessar Editor</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            )}
           </div>
 
         </div>
