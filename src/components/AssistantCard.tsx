@@ -27,6 +27,7 @@ interface AssistantCardProps {
   candidateContext: any;
   onGenerateRoleAI?: (roleName: string, areaName?: string) => Promise<void> | void;
   isGeneratingRoleAI?: boolean;
+  theme?: 'light' | 'dark';
 }
 
 export const AssistantCard: React.FC<AssistantCardProps> = ({
@@ -37,7 +38,9 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
   candidateContext,
   onGenerateRoleAI,
   isGeneratingRoleAI,
+  theme,
 }) => {
+  const isDark = theme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
   // Controle retrátil: por padrão fechado para não ocupar espaço desnecessário (o usuário clica para visualizar)
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -184,21 +187,23 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-indigo-200/90 shadow-sm transition-all overflow-hidden">
+    <div className={`rounded-2xl border transition-all overflow-hidden ${
+      isDark ? 'bg-slate-900 border-slate-700/80 text-slate-100 shadow-xl shadow-slate-950/40' : 'bg-white border-indigo-200/90 shadow-sm'
+    }`}>
       
       {/* ========================================================================= */}
       {/* BARRA SUPERIOR RETRÁTIL (CLIQUE PARA EXPANDIR OU RECOLHER) */}
       {/* ========================================================================= */}
       <div
         onClick={() => setIsExpanded(!isExpanded)}
-        className="p-3.5 sm:p-4 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white cursor-pointer select-none hover:opacity-95 transition-all flex items-center justify-between gap-3"
+        className="p-3.5 sm:p-4 bg-gradient-to-r from-slate-900 via-slate-850 to-indigo-950 text-white cursor-pointer select-none hover:opacity-95 transition-all flex items-center justify-between gap-3 border-b border-slate-800/80"
         role="button"
         tabIndex={0}
         aria-expanded={isExpanded}
       >
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 text-white shadow-xs shrink-0">
-            <Sparkles className="w-4 h-4 text-amber-300" />
+          <div className="p-2 rounded-xl bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 text-white shadow-xs shrink-0">
+            <Sparkles className="w-4 h-4 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
@@ -210,14 +215,14 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                 <span>IA Ativa</span>
               </span>
             </div>
-            <p className="text-[11px] text-indigo-200/80 line-clamp-1 mt-0.5">
+            <p className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">
               Dicas estratégicas, modelos inéditos e geração com IA para <strong className="text-white font-bold">{currentRoleTemplate.roleName}</strong>
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2.5 shrink-0">
-          <span className="text-[11px] font-bold text-indigo-200 hidden sm:inline">
+          <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">
             {isExpanded ? 'Recolher' : 'Clique para visualizar'}
           </span>
           <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors">
@@ -230,28 +235,36 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
       {/* CONTEÚDO EXPANSÍVEL (SÓ EXIBIDO QUANDO O CANDIDATO CLICAR PARA VISUALIZAR) */}
       {/* ========================================================================= */}
       {isExpanded && (
-        <div className="p-4 sm:p-5 space-y-4 border-t border-indigo-100 bg-white">
+        <div className={`p-4 sm:p-5 space-y-4 border-t ${
+          isDark ? 'border-slate-800 bg-slate-900/95 text-slate-100' : 'border-indigo-100 bg-white'
+        }`}>
           
           {/* SUB-CABEÇALHO INTERNO COM NAVEGAÇÃO DAS DUAS ABAS */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-              <span>Função ativa: <strong className="text-indigo-950 font-bold">{currentRoleTemplate.roleName}</strong></span>
+          <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b ${
+            isDark ? 'border-slate-800 text-slate-400' : 'border-slate-100 text-slate-500'
+          }`}>
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span>Função ativa: <strong className={`font-bold ${isDark ? 'text-blue-300' : 'text-indigo-950'}`}>{currentRoleTemplate.roleName}</strong></span>
               {onGenerateRoleAI && (
                 <button
                   type="button"
                   onClick={() => onGenerateRoleAI(currentRoleTemplate.roleName, currentRoleTemplate.area)}
                   disabled={isGeneratingRoleAI}
-                  className="inline-flex items-center gap-1 text-[11px] text-blue-700 hover:text-blue-900 font-semibold underline cursor-pointer disabled:opacity-50"
+                  className={`inline-flex items-center gap-1 text-[11px] font-semibold underline cursor-pointer disabled:opacity-50 ${
+                    isDark ? 'text-sky-400 hover:text-sky-300' : 'text-blue-700 hover:text-blue-900'
+                  }`}
                   title="Atualizar e regenerar exemplos sob medida para esta profissão com Inteligência Artificial"
                 >
-                  <RefreshCw className={`w-3 h-3 ${isGeneratingRoleAI ? 'animate-spin text-blue-600' : ''}`} />
+                  <RefreshCw className={`w-3 h-3 ${isGeneratingRoleAI ? 'animate-spin text-sky-400' : ''}`} />
                   <span>{isGeneratingRoleAI ? 'Otimizando...' : 'Regenerar com IA'}</span>
                 </button>
               )}
               <button
                 type="button"
                 onClick={() => setShowAiInfoModal(true)}
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 hover:text-indigo-700 text-[10px] font-medium transition-colors cursor-pointer"
+                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium transition-colors cursor-pointer ${
+                  isDark ? 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700' : 'bg-slate-100 text-slate-600 hover:text-indigo-700'
+                }`}
               >
                 <span>Como funciona a IA</span>
                 <HelpCircle className="w-3 h-3" />
@@ -259,7 +272,9 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
             </div>
 
             {/* NAVEGAÇÃO ENTRE AS DUAS ABAS (Dicas & Geração IA | Exemplos) */}
-            <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs shrink-0 self-start sm:self-auto">
+            <div className={`flex items-center gap-1.5 p-1 rounded-xl text-xs shrink-0 self-start sm:self-auto ${
+              isDark ? 'bg-slate-800/90 border border-slate-700/80' : 'bg-slate-100'
+            }`}>
               
               {/* Aba 1: Dicas & Geração IA */}
               <button
@@ -267,11 +282,11 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                 onClick={() => setActiveTab('ai')}
                 className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'ai'
-                    ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-indigo-600'
+                    ? 'bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 text-white shadow-xs'
+                    : isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-indigo-600'
                 }`}
               >
-                <Bot className={`w-3.5 h-3.5 ${activeTab === 'ai' ? 'text-amber-300' : 'text-indigo-500'}`} />
+                <Bot className={`w-3.5 h-3.5 ${activeTab === 'ai' ? 'text-white' : isDark ? 'text-sky-400' : 'text-indigo-500'}`} />
                 <span>Dicas & Geração IA</span>
               </button>
 
@@ -281,11 +296,11 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                 onClick={() => setActiveTab('examples')}
                 className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === 'examples'
-                    ? 'bg-white text-blue-900 shadow-xs border border-slate-200'
-                    : 'text-slate-600 hover:text-blue-700'
+                    ? isDark ? 'bg-slate-700 text-white shadow-xs border border-slate-600' : 'bg-white text-blue-900 shadow-xs border border-slate-200'
+                    : isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-blue-700'
                 }`}
               >
-                <Database className="w-3.5 h-3.5 text-blue-600" />
+                <Database className={`w-3.5 h-3.5 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
                 <span>Exemplos</span>
               </button>
 
@@ -325,7 +340,7 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowAiInfoModal(false)}
-                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs cursor-pointer shadow-xs"
+                  className="px-3.5 py-1.5 rounded-xl bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-bold text-xs cursor-pointer shadow-xs active:scale-95"
                 >
                   Entendido, continuar usando o Centro de IA
                 </button>
@@ -335,11 +350,13 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
 
           {/* DICA ESPECIALIZADA RÁPIDA PARA O CARGO NESTA ETAPA */}
           {currentRoleTemplate.stepTips && currentRoleTemplate.stepTips[step] && (
-            <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-xs text-blue-950 flex items-start gap-2 mb-1">
-              <Sparkles className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+            <div className={`p-3 rounded-xl text-xs flex items-start gap-2 mb-1 border ${
+              isDark ? 'bg-blue-950/40 border-blue-800/50 text-blue-200' : 'bg-blue-50/70 border-blue-200 text-blue-950'
+            }`}>
+              <Sparkles className={`w-4 h-4 shrink-0 mt-0.5 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
               <div>
-                <span className="font-bold text-blue-900">Orientação Rápida para {currentRoleTemplate.roleName}: </span>
-                <span className="leading-relaxed text-slate-700">{currentRoleTemplate.stepTips[step]}</span>
+                <span className={`font-bold ${isDark ? 'text-sky-300' : 'text-blue-900'}`}>Orientação Rápida para {currentRoleTemplate.roleName}: </span>
+                <span className={`leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{currentRoleTemplate.stepTips[step]}</span>
               </div>
             </div>
           )}
@@ -348,20 +365,28 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
           {/* ABA 1: DICAS & GERAÇÃO IA (Consultoria Dinâmica & Sugestão em Tempo Real) */}
           {/* ========================================================================= */}
           {activeTab === 'ai' && (
-            <div className="relative bg-gradient-to-br from-indigo-50/90 via-slate-50/90 to-blue-50/90 border border-indigo-200/80 rounded-2xl p-4 text-xs space-y-4 shadow-2xs overflow-hidden">
+            <div className={`relative border rounded-2xl p-4 text-xs space-y-4 shadow-sm overflow-hidden ${
+              isDark
+                ? 'bg-gradient-to-br from-slate-900 via-slate-850 to-blue-950/40 border-slate-700/80 text-slate-100 shadow-slate-950/50'
+                : 'bg-gradient-to-br from-indigo-50/90 via-slate-50/90 to-blue-50/90 border-indigo-200/80 text-slate-900 shadow-2xs'
+            }`}>
               
-              <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-400/10 rounded-full blur-2xl pointer-events-none -mr-12 -mt-12" />
+              <div className={`absolute top-0 right-0 w-48 h-48 ${isDark ? 'bg-blue-600/10' : 'bg-indigo-400/10'} rounded-full blur-2xl pointer-events-none -mr-12 -mt-12`} />
 
               {/* Barra Superior da IA */}
-              <div className="flex flex-wrap items-center justify-between gap-2.5 pb-2.5 border-b border-indigo-100 relative z-10">
+              <div className={`flex flex-wrap items-center justify-between gap-2.5 pb-2.5 border-b relative z-10 ${
+                isDark ? 'border-slate-800' : 'border-indigo-100'
+              }`}>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 text-white font-bold text-[11px] shadow-xs">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 text-white font-bold text-[11px] shadow-xs">
+                    <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
                     <span>{aiSource === 'gemini_ai_realtime' ? 'Gemini AI em Tempo Real' : 'Centro de IA Ativo'}</span>
                   </span>
 
                   {activeTip?.tag && (
-                    <span className="text-[10px] font-bold text-indigo-700 uppercase tracking-wider bg-white/90 px-2.5 py-0.5 rounded-full border border-indigo-200/80 shadow-2xs">
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border shadow-2xs ${
+                      isDark ? 'bg-slate-800 text-sky-300 border-slate-700' : 'text-indigo-700 bg-white/90 border-indigo-200/80'
+                    }`}>
                       {activeTip.tag}
                     </span>
                   )}
@@ -372,25 +397,33 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                   type="button"
                   onClick={() => fetchRealAiTip(true)}
                   disabled={isFetchingAiTip}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white hover:bg-indigo-50 text-indigo-700 hover:text-indigo-900 border border-indigo-200 font-bold text-xs shadow-2xs transition-all cursor-pointer disabled:opacity-60"
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-bold text-xs shadow-xs transition-all cursor-pointer disabled:opacity-60 ${
+                    isDark
+                      ? 'bg-slate-800 hover:bg-slate-750 text-sky-300 hover:text-white border border-slate-700'
+                      : 'bg-white hover:bg-indigo-50 text-indigo-700 hover:text-indigo-900 border border-indigo-200 shadow-2xs'
+                  }`}
                   title="Gerar e consultar outra sugestão inédita de IA para esta etapa"
                 >
-                  <RefreshCw className={`w-3.5 h-3.5 text-indigo-600 ${isFetchingAiTip ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`w-3.5 h-3.5 ${isFetchingAiTip ? 'animate-spin' : ''} ${isDark ? 'text-sky-400' : 'text-indigo-600'}`} />
                   <span>{isFetchingAiTip ? 'Consultando IA...' : 'Consultar Outra Dica da IA'}</span>
                 </button>
               </div>
 
               {/* Card com a Análise Estratégica da IA para a Etapa */}
-              <div className="bg-white/90 rounded-xl p-3.5 border border-indigo-100/90 shadow-2xs space-y-2 relative z-10">
+              <div className={`rounded-xl p-3.5 border shadow-2xs space-y-2 relative z-10 ${
+                isDark ? 'bg-slate-800/90 border-slate-700/80 text-slate-200' : 'bg-white/90 border-indigo-100/90 text-slate-900'
+              }`}>
                 <div className="flex items-start gap-2.5">
-                  <div className="p-1.5 rounded-lg bg-indigo-100 text-indigo-700 shrink-0 mt-0.5">
+                  <div className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${
+                    isDark ? 'bg-blue-500/20 text-sky-300 border border-blue-500/30' : 'bg-indigo-100 text-indigo-700'
+                  }`}>
                     <Target className="w-4 h-4" />
                   </div>
                   <div className="space-y-1 w-full">
-                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm tracking-tight">
+                    <h4 className={`font-bold text-xs sm:text-sm tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {activeTip?.title || `Orientação para ${currentRoleTemplate.roleName}`}
                     </h4>
-                    <p className="text-slate-600 leading-relaxed text-[11px] sm:text-xs">
+                    <p className={`leading-relaxed text-[11px] sm:text-xs ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                       {activeTip?.content || activeTip?.tip}
                     </p>
                   </div>
@@ -399,17 +432,19 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
 
               {/* Sugestão de Texto Prático Formulada pela IA */}
               {(activeTip?.actionableSnippet || activeTip?.actionableInsight) && (
-                <div className="bg-white/95 rounded-xl p-3.5 border border-indigo-200 shadow-2xs space-y-2.5 relative z-10">
+                <div className={`rounded-xl p-3.5 border shadow-2xs space-y-2.5 relative z-10 ${
+                  isDark ? 'bg-slate-800/95 border-slate-700/80' : 'bg-white/95 border-indigo-200'
+                }`}>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <span className="font-bold text-[11px] text-indigo-950 flex items-center gap-1.5">
-                      <Lightbulb className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span className={`font-bold text-[11px] flex items-center gap-1.5 ${isDark ? 'text-slate-200' : 'text-indigo-950'}`}>
+                      <Lightbulb className="w-4 h-4 text-amber-400 shrink-0" />
                       <span>Exemplo Inédito Recomendado pela IA:</span>
                     </span>
                     
                     <button
                       type="button"
                       onClick={handleApplyAiSuggestion}
-                      className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold cursor-pointer transition-colors shadow-2xs flex items-center gap-1.5 self-start sm:self-auto"
+                      className="px-3 py-1.5 rounded-lg bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white text-[11px] font-bold cursor-pointer transition-colors shadow-xs flex items-center gap-1.5 self-start sm:self-auto active:scale-95"
                     >
                       <Check className="w-3.5 h-3.5" />
                       <span>
@@ -420,24 +455,32 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                     </button>
                   </div>
 
-                  <p className="text-slate-800 text-[11px] sm:text-xs leading-relaxed italic bg-indigo-50/70 p-3 rounded-lg border border-indigo-100">
+                  <p className={`text-[11px] sm:text-xs leading-relaxed italic p-3 rounded-lg border ${
+                    isDark ? 'bg-slate-900/90 text-slate-200 border-slate-800' : 'text-slate-800 bg-indigo-50/70 border-indigo-100'
+                  }`}>
                     "{activeTip.actionableSnippet || activeTip.actionableInsight}"
                   </p>
                 </div>
               )}
 
               {/* Navegação Entre Dicas Anteriores / Próximas */}
-              <div className="flex items-center justify-between pt-1 text-[11px] text-slate-500 relative z-10">
+              <div className={`flex items-center justify-between pt-1 text-[11px] relative z-10 ${
+                isDark ? 'text-slate-400' : 'text-slate-500'
+              }`}>
                 <button
                   type="button"
                   disabled={currentAiIndex <= 0 || isFetchingAiTip}
                   onClick={() => setCurrentAiIndex((prev) => Math.max(0, prev - 1))}
-                  className="text-indigo-700 hover:text-indigo-900 font-semibold cursor-pointer px-2.5 py-1 rounded-lg hover:bg-indigo-100/60 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className={`font-semibold cursor-pointer px-2.5 py-1 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+                    isDark ? 'text-sky-400 hover:text-white hover:bg-slate-800' : 'text-indigo-700 hover:text-indigo-900 hover:bg-indigo-100/60'
+                  }`}
                 >
                   ← Orientação Anterior
                 </button>
-                <span className="font-medium text-indigo-950/70 hidden sm:inline text-center">
-                  Sugestão {currentAiIndex + 1} de {aiTipsHistory.length} para <strong>{currentRoleTemplate.roleName}</strong>
+                <span className={`font-medium hidden sm:inline text-center ${
+                  isDark ? 'text-slate-400' : 'text-indigo-950/70'
+                }`}>
+                  Sugestão {currentAiIndex + 1} de {aiTipsHistory.length} para <strong className={isDark ? 'text-slate-200' : 'text-slate-900'}>{currentRoleTemplate.roleName}</strong>
                 </span>
                 <button
                   type="button"
@@ -449,7 +492,9 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                       fetchRealAiTip(true);
                     }
                   }}
-                  className="text-indigo-700 hover:text-indigo-900 font-bold cursor-pointer px-2.5 py-1 rounded-lg hover:bg-indigo-100/60 transition-colors disabled:opacity-40"
+                  className={`font-bold cursor-pointer px-2.5 py-1 rounded-lg transition-colors disabled:opacity-40 ${
+                    isDark ? 'text-sky-400 hover:text-white hover:bg-slate-800' : 'text-indigo-700 hover:text-indigo-900 hover:bg-indigo-100/60'
+                  }`}
                 >
                   Próxima Sugestão →
                 </button>
@@ -466,19 +511,23 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
               
               {/* ETAPA 1: PALAVRAS-CHAVE E TERMOS BUSCADOS */}
               {step === 1 && (
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-700 space-y-3">
-                  <p className="font-semibold text-slate-900 flex items-center gap-1.5">
-                    <BookOpen className="w-4 h-4 text-blue-600" />
-                    Como escolher o cargo e o modelo visual:
+                <div className={`border rounded-xl p-4 text-xs space-y-3 ${
+                  isDark ? 'bg-slate-850/80 border-slate-700/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                }`}>
+                  <p className={`font-semibold flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <BookOpen className={`w-4 h-4 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
+                    <span>Como escolher o cargo e o modelo visual:</span>
                   </p>
-                  <p className="leading-relaxed text-slate-600">
+                  <p className={`leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                     Selecione o cargo mais próximo da vaga que você deseja concorrer. Todas as recomendações se adaptam automaticamente ao seu objetivo.
                   </p>
                   <div className="pt-1 space-y-1.5">
-                    <span className="text-[11px] font-bold text-slate-700 block">Termos e palavras-chave mais buscadas para esta área:</span>
+                    <span className={`text-[11px] font-bold block ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Termos e palavras-chave mais buscadas para esta área:</span>
                     <div className="flex flex-wrap gap-1.5">
                       {currentRoleTemplate.commonKeywords.map((kw, idx) => (
-                        <span key={idx} className="bg-white text-slate-700 px-2.5 py-1 rounded-md text-[11px] font-medium border border-slate-200">
+                        <span key={idx} className={`px-2.5 py-1 rounded-md text-[11px] font-medium border ${
+                          isDark ? 'bg-slate-900 border-slate-700 text-slate-300' : 'bg-white text-slate-700 border-slate-200'
+                        }`}>
                           {kw}
                         </span>
                       ))}
@@ -489,28 +538,32 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
 
               {/* ETAPA 2: MODELOS DE TÍTULO PROFISSIONAL (HEADLINE) */}
               {step === 2 && (
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-3">
+                <div className={`border rounded-xl p-4 text-xs space-y-3 ${
+                  isDark ? 'bg-slate-850/80 border-slate-700/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                }`}>
                   <div>
-                    <p className="font-semibold text-slate-900 flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-blue-600" />
-                      Modelos de Título Profissional (Headline) Prontos para Usar:
+                    <p className={`font-semibold flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                      <Sparkles className={`w-4 h-4 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
+                      <span>Modelos de Título Profissional (Headline) Prontos para Usar:</span>
                     </p>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
+                    <p className={`text-[11px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                       O título fica logo abaixo do seu nome e resume o que você faz em poucas palavras. Clique em "Usar no Currículo" para preencher automaticamente.
                     </p>
                   </div>
 
                   <div className="space-y-2 pt-1">
                     {currentRoleTemplate.headlines.map((hl, idx) => (
-                      <div key={idx} className="p-3 rounded-lg bg-white border border-slate-200 flex items-start justify-between gap-3 shadow-2xs">
-                        <span className="text-slate-800 leading-relaxed font-medium">{hl}</span>
+                      <div key={idx} className={`p-3 rounded-lg border flex items-start justify-between gap-3 shadow-2xs ${
+                        isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-white border-slate-200'
+                      }`}>
+                        <span className={`leading-relaxed font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{hl}</span>
                         <button
                           type="button"
                           onClick={() => {
                             onApplyText(hl, 'roleHeadline');
                             notifyApplied(`hl-${idx}`);
                           }}
-                          className="px-3 py-1 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 shrink-0 text-[11px] cursor-pointer transition-colors"
+                          className="px-3 py-1 rounded-md bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-semibold shrink-0 text-[11px] cursor-pointer transition-colors active:scale-95 shadow-xs"
                         >
                           {appliedField === `hl-${idx}` ? (
                             <span className="flex items-center gap-1"><Check className="w-3 h-3" /> Inserido!</span>
@@ -526,15 +579,19 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
 
               {/* ETAPA 3: MODELOS DE RESUMO PROFISSIONAL */}
               {step === 3 && (
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-3">
-                  <p className="font-semibold text-slate-900 flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-blue-600" />
-                    Modelos de Resumo Profissional Prontos:
+                <div className={`border rounded-xl p-4 text-xs space-y-3 ${
+                  isDark ? 'bg-slate-850/80 border-slate-700/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                }`}>
+                  <p className={`font-semibold flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <Sparkles className={`w-4 h-4 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
+                    <span>Modelos de Resumo Profissional Prontos:</span>
                   </p>
                   <div className="space-y-2.5 pt-1">
                     {currentRoleTemplate.summaries.map((sm, idx) => (
-                      <div key={idx} className="p-3.5 rounded-lg bg-white border border-slate-200 space-y-2 shadow-2xs">
-                        <p className="text-slate-800 leading-relaxed italic">{sm}</p>
+                      <div key={idx} className={`p-3.5 rounded-lg border space-y-2 shadow-2xs ${
+                        isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-white border-slate-200'
+                      }`}>
+                        <p className={`leading-relaxed italic ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{sm}</p>
                         <div className="flex justify-end">
                           <button
                             type="button"
@@ -542,7 +599,7 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                               onApplyText(sm, 'summary');
                               notifyApplied(`sm-${idx}`);
                             }}
-                            className="px-3 py-1 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 text-[11px] cursor-pointer transition-colors"
+                            className="px-3 py-1 rounded-md bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-semibold text-[11px] cursor-pointer transition-colors active:scale-95 shadow-xs"
                           >
                             {appliedField === `sm-${idx}` ? (
                               <span className="flex items-center gap-1"><Check className="w-3 h-3" /> Inserido no Resumo!</span>
@@ -562,22 +619,26 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                 <div className="space-y-4">
                   
                   {/* Bullets de Conquistas Prontas */}
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-3">
-                    <p className="font-semibold text-slate-900 flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-blue-600" />
-                      Atividades e Conquistas Prontas para a Descrição:
+                  <div className={`border rounded-xl p-4 text-xs space-y-3 ${
+                    isDark ? 'bg-slate-850/80 border-slate-700/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}>
+                    <p className={`font-semibold flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                      <Sparkles className={`w-4 h-4 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
+                      <span>Atividades e Conquistas Prontas para a Descrição:</span>
                     </p>
                     <div className="space-y-2 pt-1">
                       {currentRoleTemplate.experienceBullets.map((exp, idx) => (
-                        <div key={idx} className="p-3 rounded-lg bg-white border border-slate-200 flex items-start justify-between gap-3 shadow-2xs">
-                          <span className="text-slate-800 leading-relaxed">{exp}</span>
+                        <div key={idx} className={`p-3 rounded-lg border flex items-start justify-between gap-3 shadow-2xs ${
+                          isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-white border-slate-200'
+                        }`}>
+                          <span className={`leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{exp}</span>
                           <button
                             type="button"
                             onClick={() => {
                               onApplyText(exp, 'appendExperienceBullet');
                               notifyApplied(`exp-${idx}`);
                             }}
-                            className="px-2.5 py-1 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 shrink-0 text-[11px] cursor-pointer transition-colors"
+                            className="px-2.5 py-1 rounded-md bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-semibold shrink-0 text-[11px] cursor-pointer transition-colors active:scale-95 shadow-xs"
                           >
                             {appliedField === `exp-${idx}` ? (
                               <span className="flex items-center gap-1"><Check className="w-3 h-3" /> Adicionado!</span>
@@ -591,12 +652,16 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                   </div>
 
                   {/* Banco de Verbos de Ação Estratégicos (Centralizado no card Exemplos) */}
-                  <div className="bg-amber-50/70 border border-amber-200 rounded-xl p-4 text-xs space-y-3 text-amber-950">
-                    <div className="flex items-center gap-2 pb-2 border-b border-amber-200/60">
-                      <Zap className="w-4 h-4 text-amber-600" />
-                      <span className="font-bold text-amber-900">Banco de Verbos de Ação Estratégicos (Aprovados em ATS):</span>
+                  <div className={`border rounded-xl p-4 text-xs space-y-3 ${
+                    isDark ? 'bg-amber-950/20 border-amber-800/40 text-amber-200' : 'bg-amber-50/70 border-amber-200 text-amber-950'
+                  }`}>
+                    <div className={`flex items-center gap-2 pb-2 border-b ${
+                      isDark ? 'border-amber-800/40 text-amber-300' : 'border-amber-200/60 text-amber-900'
+                    }`}>
+                      <Zap className="w-4 h-4 text-amber-400" />
+                      <span className="font-bold">Banco de Verbos de Ação Estratégicos (Aprovados em ATS):</span>
                     </div>
-                    <p className="text-[11px] text-amber-900/80 leading-relaxed">
+                    <p className={`text-[11px] leading-relaxed ${isDark ? 'text-amber-200/80' : 'text-amber-900/80'}`}>
                       Comece cada frase da sua experiência com um verbo forte no passado. Clique no verbo abaixo para inseri-lo diretamente na descrição:
                     </p>
 
@@ -608,7 +673,9 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                         { label: 'Organização & Processos', list: ACTION_VERBS.organizacao },
                       ].map((cat, catIdx) => (
                         <div key={catIdx} className="space-y-1">
-                          <span className="text-[10px] font-bold text-amber-900 uppercase tracking-wider block">{cat.label}:</span>
+                          <span className={`text-[10px] font-bold uppercase tracking-wider block ${
+                            isDark ? 'text-amber-300' : 'text-amber-900'
+                          }`}>{cat.label}:</span>
                           <div className="flex flex-wrap gap-1.5">
                             {cat.list.map((verb, idx) => (
                               <button
@@ -618,7 +685,11 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                                   onApplyText(verb, 'insertVerb');
                                   notifyApplied(`verb-${catIdx}-${idx}`);
                                 }}
-                                className="px-2.5 py-1 rounded-md bg-white border border-amber-300 hover:border-amber-500 hover:bg-amber-100 text-amber-950 text-[11px] font-medium transition-colors cursor-pointer"
+                                className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors cursor-pointer border ${
+                                  isDark
+                                    ? 'bg-slate-800 border-amber-800/60 text-amber-200 hover:bg-amber-900/40 hover:text-white'
+                                    : 'bg-white border-amber-300 hover:border-amber-500 hover:bg-amber-100 text-amber-950'
+                                }`}
                               >
                                 + {verb}
                               </button>
@@ -629,7 +700,7 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                     </div>
 
                     {appliedField?.startsWith('verb-') && (
-                      <p className="text-emerald-700 font-semibold text-[11px] pt-1">
+                      <p className="text-emerald-400 font-semibold text-[11px] pt-1">
                         ✅ Verbo inserido no campo de descrição da experiência ativa!
                       </p>
                     )}
@@ -640,22 +711,26 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
 
               {/* ETAPA 5: FORMAÇÃO E CERTIFICAÇÕES */}
               {step === 5 && (
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-3">
-                  <p className="font-semibold text-slate-900 flex items-center gap-1.5">
-                    <BookOpen className="w-4 h-4 text-blue-600" />
-                    Cursos e Certificações Recomendadas para esta área:
+                <div className={`border rounded-xl p-4 text-xs space-y-3 ${
+                  isDark ? 'bg-slate-850/80 border-slate-700/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                }`}>
+                  <p className={`font-semibold flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <BookOpen className={`w-4 h-4 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
+                    <span>Cursos e Certificações Recomendadas para esta área:</span>
                   </p>
                   <div className="space-y-2 pt-1">
                     {currentRoleTemplate.certifications.map((cert, idx) => (
-                      <div key={idx} className="p-3 rounded-lg bg-white border border-slate-200 flex items-center justify-between gap-3 shadow-2xs">
-                        <span className="text-slate-800 font-medium">{cert}</span>
+                      <div key={idx} className={`p-3 rounded-lg border flex items-center justify-between gap-3 shadow-2xs ${
+                        isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-white border-slate-200'
+                      }`}>
+                        <span className={`font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{cert}</span>
                         <button
                           type="button"
                           onClick={() => {
                             onApplyText(cert, 'addCertification');
                             notifyApplied(`cert-${idx}`);
                           }}
-                          className="px-3 py-1 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 shrink-0 text-[11px] cursor-pointer transition-colors"
+                          className="px-3 py-1 rounded-md bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-semibold shrink-0 text-[11px] cursor-pointer transition-colors active:scale-95 shadow-xs"
                         >
                           {appliedField === `cert-${idx}` ? (
                             <span className="flex items-center gap-1"><Check className="w-3 h-3" /> Adicionado!</span>
@@ -671,9 +746,11 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
 
               {/* ETAPA 6: HABILIDADES TÉCNICAS E COMPORTAMENTAIS */}
               {step === 6 && (
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-4">
+                <div className={`border rounded-xl p-4 text-xs space-y-4 ${
+                  isDark ? 'bg-slate-850/80 border-slate-700/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                }`}>
                   <div>
-                    <p className="font-semibold text-slate-900 mb-2">Competências Técnicas Mais Valorizadas (Hard Skills):</p>
+                    <p className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Competências Técnicas Mais Valorizadas (Hard Skills):</p>
                     <div className="flex flex-wrap gap-1.5">
                       {currentRoleTemplate.hardSkills.map((hs, idx) => (
                         <button
@@ -683,17 +760,21 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                             onApplyText(hs, 'addHardSkill');
                             notifyApplied(`hs-${idx}`);
                           }}
-                          className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-blue-600 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer flex items-center gap-1"
+                          className={`px-2.5 py-1 rounded-lg border text-[11px] font-medium transition-colors cursor-pointer flex items-center gap-1 ${
+                            isDark
+                              ? 'bg-slate-800 border-slate-700 text-slate-300 hover:border-sky-400 hover:text-sky-300'
+                              : 'bg-white border-slate-200 text-slate-700 hover:border-blue-600 hover:text-blue-700'
+                          }`}
                         >
                           <span>+ {hs}</span>
-                          {appliedField === `hs-${idx}` && <Check className="w-3 h-3 text-emerald-600" />}
+                          {appliedField === `hs-${idx}` && <Check className="w-3 h-3 text-emerald-400" />}
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-200">
-                    <p className="font-semibold text-slate-900 mb-2">Competências Comportamentais (Soft Skills):</p>
+                  <div className={`pt-3 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+                    <p className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Competências Comportamentais (Soft Skills):</p>
                     <div className="flex flex-wrap gap-1.5">
                       {currentRoleTemplate.softSkills.map((ss, idx) => (
                         <button
@@ -703,10 +784,14 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                             onApplyText(ss, 'addSoftSkill');
                             notifyApplied(`ss-${idx}`);
                           }}
-                          className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-emerald-600 hover:text-emerald-700 text-[11px] font-medium transition-colors cursor-pointer flex items-center gap-1"
+                          className={`px-2.5 py-1 rounded-lg border text-[11px] font-medium transition-colors cursor-pointer flex items-center gap-1 ${
+                            isDark
+                              ? 'bg-slate-800 border-slate-700 text-slate-300 hover:border-emerald-400 hover:text-emerald-300'
+                              : 'bg-white border-slate-200 text-slate-700 hover:border-emerald-600 hover:text-emerald-700'
+                          }`}
                         >
                           <span>+ {ss}</span>
-                          {appliedField === `ss-${idx}` && <Check className="w-3 h-3 text-emerald-600" />}
+                          {appliedField === `ss-${idx}` && <Check className="w-3 h-3 text-emerald-400" />}
                         </button>
                       ))}
                     </div>
@@ -716,13 +801,17 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
 
               {/* ETAPA 7: APRESENTAÇÃO LINKEDIN */}
               {step === 7 && (
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-3">
-                  <p className="font-semibold text-slate-900 flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-blue-600" />
-                    Texto para a Seção "Sobre" do LinkedIn:
+                <div className={`border rounded-xl p-4 text-xs space-y-3 ${
+                  isDark ? 'bg-slate-850/80 border-slate-700/80 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                }`}>
+                  <p className={`font-semibold flex items-center gap-1.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <Sparkles className={`w-4 h-4 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
+                    <span>Texto para a Seção "Sobre" do LinkedIn:</span>
                   </p>
-                  <div className="p-3.5 rounded-lg bg-white border border-slate-200 space-y-2.5 shadow-2xs">
-                    <p className="text-slate-800 leading-relaxed italic whitespace-pre-line">
+                  <div className={`p-3.5 rounded-lg border space-y-2.5 shadow-2xs ${
+                    isDark ? 'bg-slate-800/90 border-slate-700/80' : 'bg-white border-slate-200'
+                  }`}>
+                    <p className={`leading-relaxed italic whitespace-pre-line ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
                       {currentRoleTemplate.linkedinAbout}
                     </p>
                     <div className="flex justify-end">
@@ -732,7 +821,7 @@ export const AssistantCard: React.FC<AssistantCardProps> = ({
                           navigator.clipboard.writeText(currentRoleTemplate.linkedinAbout);
                           notifyApplied('linkedinAbout');
                         }}
-                        className="px-3 py-1 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 text-[11px] cursor-pointer transition-colors"
+                        className="px-3 py-1 rounded-md bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-semibold text-[11px] cursor-pointer transition-colors active:scale-95 shadow-xs"
                       >
                         {appliedField === 'linkedinAbout' ? (
                           <span className="flex items-center gap-1"><Check className="w-3 h-3" /> Copiado para a Área de Transferência!</span>

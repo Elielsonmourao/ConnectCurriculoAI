@@ -574,6 +574,7 @@ export default function App() {
                     onAddSkills={handleAddSkillsBatch}
                     onGenerateRoleAI={handleGenerateRoleWithAI}
                     isGeneratingRoleAI={isGeneratingRoleAI}
+                    theme={theme}
                     candidateContext={{
                       nome: cvData.fullName,
                       cargo: cvData.roleHeadline || cvData.targetRole,
@@ -661,17 +662,17 @@ export default function App() {
             >
               {/* Banner do Modo Visualização Ativo */}
               {editorViewMode === 'preview' && (
-                <div className="no-print w-full max-w-[210mm] mx-auto mb-4 p-3.5 bg-gradient-to-r from-[#073646] via-[#053e68] to-[#003882] text-white rounded-2xl border border-teal-500/40 shadow-lg flex flex-wrap items-center justify-between gap-3">
+                <div className="no-print w-full max-w-[210mm] mx-auto mb-4 p-3.5 bg-gradient-to-r from-slate-900 via-slate-850 to-indigo-950 text-white rounded-2xl border border-slate-700/80 shadow-xl flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
+                    <div className="p-2.5 rounded-xl bg-blue-500/20 text-sky-300 border border-blue-500/30">
                       <Eye className="w-5 h-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-black tracking-wide uppercase text-cyan-300">Modo de Visualização Ativo</span>
-                        <span className="text-[10px] bg-teal-500/30 text-teal-200 px-2 py-0.5 rounded-full font-bold">Folha A4 Real</span>
+                        <span className="text-xs font-black tracking-wide uppercase text-sky-300">Modo de Visualização Ativo</span>
+                        <span className="text-[10px] bg-blue-500/30 text-blue-200 px-2 py-0.5 rounded-full font-bold">Folha A4 Real</span>
                       </div>
-                      <p className="text-[11px] text-blue-100 mt-0.5">
+                      <p className="text-[11px] text-slate-300 mt-0.5">
                         Foco total no currículo para leitura, revisão minuciosa de layout e impressão.
                       </p>
                     </div>
@@ -681,7 +682,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setEditorViewMode('split')}
-                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-cyan-950/40 border border-cyan-400/30 transition-all cursor-pointer active:scale-95"
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-bold text-xs shadow-md shadow-blue-500/25 border border-sky-300/30 transition-all cursor-pointer active:scale-95"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       <span>Voltar para Edição</span>
@@ -691,7 +692,7 @@ export default function App() {
                       type="button"
                       onClick={handleDownloadPDF}
                       disabled={isGeneratingPDF}
-                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs shadow-xs border border-slate-700 transition-colors cursor-pointer"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Baixar PDF</span>

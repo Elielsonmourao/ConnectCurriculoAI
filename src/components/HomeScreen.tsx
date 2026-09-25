@@ -85,21 +85,24 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
   return (
     <div
-      className={`min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white relative overflow-hidden font-sans transition-colors duration-200 ${
-        isDark
-          ? 'bg-gradient-to-b from-[#073646] via-[#053e68] to-[#003882] text-slate-100'
-          : 'bg-gradient-to-b from-[#d8ebf2] via-[#e5f1f8] to-[#eff6ff] text-slate-900'
+      className={`min-h-screen flex flex-col justify-between selection:bg-blue-500 selection:text-white relative overflow-hidden font-sans transition-colors duration-300 ${
+        isDark ? 'text-slate-100' : 'text-slate-900'
       }`}
+      style={{
+        background: isDark
+          ? 'radial-gradient(circle at 50% 35%, #0f172a 0%, #020617 100%)'
+          : 'radial-gradient(circle at 50% 20%, #ffffff 0%, #f1f5f9 100%)',
+      }}
     >
       
-      {/* Luz ambiente de fundo (Glows em azul petróleo suave no topo e azul corporativo na base) */}
-      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 ${isDark ? 'bg-gradient-to-b from-teal-400/20 via-cyan-400/10 to-transparent' : 'bg-gradient-to-b from-teal-300/25 via-sky-200/15 to-transparent'} blur-3xl pointer-events-none`} />
-      <div className={`absolute -bottom-20 -left-20 w-80 h-80 ${isDark ? 'bg-blue-600/20' : 'bg-sky-300/20'} rounded-full blur-3xl pointer-events-none`} />
-      <div className={`absolute -bottom-20 -right-20 w-80 h-80 ${isDark ? 'bg-cyan-500/15' : 'bg-blue-400/15'} rounded-full blur-3xl pointer-events-none`} />
+      {/* Luz ambiente de fundo (Glows inspirados na tela de carregamento) */}
+      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 ${isDark ? 'bg-blue-600/15' : 'bg-blue-400/15'} rounded-full blur-3xl pointer-events-none`} />
+      <div className={`absolute -bottom-20 -left-20 w-80 h-80 ${isDark ? 'bg-indigo-600/15' : 'bg-sky-300/20'} rounded-full blur-3xl pointer-events-none`} />
+      <div className={`absolute -bottom-20 -right-20 w-80 h-80 ${isDark ? 'bg-blue-500/15' : 'bg-indigo-400/15'} rounded-full blur-3xl pointer-events-none`} />
 
       {/* 1. BARRA SUPERIOR DE APLICATIVO (App Bar com Glassmorphism) */}
       <header className={`relative z-20 border-b backdrop-blur-xl sticky top-0 transition-colors ${
-        isDark ? 'border-teal-500/25 bg-[#06313d]/90 text-white' : 'border-blue-200/80 bg-white/90 text-slate-900 shadow-2xs'
+        isDark ? 'border-slate-800/80 bg-slate-900/85 text-white' : 'border-slate-200/80 bg-white/90 text-slate-900 shadow-2xs'
       }`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
           
@@ -112,10 +115,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           <div className="flex items-center gap-1.5 sm:gap-2.5">
             {/* Badge de Desenvolvedor */}
             <div className={`hidden md:flex items-center gap-2 px-3 py-1 rounded-full text-xs shadow-inner ${
-              isDark ? 'bg-[#052b36]/90 border border-teal-500/30 text-white' : 'bg-blue-50 border border-blue-200 text-slate-700'
+              isDark ? 'bg-slate-800/80 border border-slate-700/60 text-slate-300' : 'bg-slate-100 border border-slate-200 text-slate-700'
             }`}>
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Desenvolvido por <strong className="font-semibold">Elielson Mourão</strong></span>
+              <span>Desenvolvido por <strong className="font-semibold text-blue-400">Elielson Mourão</strong></span>
             </div>
 
             {/* Alternador de Modo Claro e Escuro */}
@@ -125,8 +128,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 onClick={onToggleTheme}
                 className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-xs active:scale-95 ${
                   isDark
-                    ? 'bg-[#073c4d] hover:bg-[#09475c] text-teal-200 border border-teal-500/30'
-                    : 'bg-white hover:bg-slate-100 text-slate-700 border border-blue-200'
+                    ? 'bg-slate-800/90 hover:bg-slate-700/90 text-slate-200 border border-slate-700/80'
+                    : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
                 }`}
                 title={isDark ? "Ativar Modo Claro" : "Ativar Modo Escuro"}
               >
@@ -142,12 +145,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 onClick={onViewCV}
                 className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer active:scale-95 ${
                   isDark
-                    ? 'text-cyan-200 bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40'
-                    : 'text-teal-700 bg-teal-50 hover:bg-teal-100 border border-teal-200'
+                    ? 'text-sky-300 bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/30'
+                    : 'text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200'
                 }`}
                 title="Acessar o editor no Modo Visualização direta"
               >
-                <Eye className="w-3.5 h-3.5 text-cyan-400" />
+                <Eye className="w-3.5 h-3.5 text-sky-400" />
                 <span className="hidden sm:inline">Modo Visualização</span>
                 <span className="sm:hidden">Ver</span>
               </button>
@@ -157,7 +160,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               <button
                 type="button"
                 onClick={onContinue}
-                className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 transition-all shadow-md shadow-cyan-950/40 border border-cyan-300/30 cursor-pointer active:scale-95"
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 transition-all shadow-md shadow-blue-500/25 border border-sky-300/30 cursor-pointer active:scale-95"
               >
                 <span>Acessar Editor</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -176,34 +179,32 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           
           <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-3 sm:mb-4 shadow-sm backdrop-blur-md ${
             isDark
-              ? 'bg-white/10 border border-white/20 text-cyan-200'
-              : 'bg-white/90 border border-blue-200 text-blue-900 shadow-sm'
+              ? 'bg-blue-500/15 border border-blue-500/30 text-blue-300'
+              : 'bg-blue-50 border border-blue-200 text-blue-900 shadow-sm'
           }`}>
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <Sparkles className="w-3.5 h-3.5 text-sky-400" />
             <span className="text-[11px] sm:text-xs">Sistema Inteligente de Carreira · Conexão com Padrões ATS 2026</span>
           </div>
 
           <h1 className={`text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-4 ${
             isDark ? 'text-white' : 'text-slate-900'
           }`}>
-            Connect <span className={`text-transparent bg-clip-text bg-gradient-to-r ${
-              isDark ? 'from-cyan-300 via-white to-sky-200' : 'from-blue-700 via-blue-800 to-indigo-900'
-            }`}>Currículo AI</span>
+            Connect <span className="text-blue-400">Currículo</span> <span className="text-xs sm:text-sm font-bold px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/30 align-middle inline-block ml-1">AI</span>
           </h1>
 
           <p className={`text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto ${
-            isDark ? 'text-blue-100' : 'text-slate-600 font-medium'
+            isDark ? 'text-slate-300' : 'text-slate-600 font-medium'
           }`}>
             Crie, aperfeiçoe e exporte currículos profissionais de alto impacto, 100% aprovados em robôs de RH (ATS) e sincronizados com as melhores práticas do LinkedIn.
           </p>
 
           {/* Badge de Crédito em Destaque no Mobile */}
-          <div className={`mt-3 sm:hidden text-xs ${isDark ? 'text-cyan-200/80' : 'text-slate-500'}`}>
-            Criado & desenvolvido por <span className={`font-bold ${isDark ? 'text-cyan-300' : 'text-slate-900'}`}>Elielson Mourão</span>
+          <div className={`mt-3 sm:hidden text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+            Criado & desenvolvido por <span className={`font-bold ${isDark ? 'text-blue-400' : 'text-slate-900'}`}>Elielson Mourão</span>
           </div>
         </div>
 
-        {/* 3. AS OPÇÕES PRINCIPAIS (Cards com Botões Harmonizados em Degradê Ciano/Petróleo/Azul) */}
+        {/* 3. AS OPÇÕES PRINCIPAIS (Cards com Botões Harmonizados com o LoadingScreen) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 max-w-4xl mx-auto w-full mb-8 sm:mb-10">
           
           {/* CARD 1: CONTINUAR MEU CURRÍCULO (Se houver rascunho salvo) */}
@@ -211,41 +212,41 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             <div
               className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-200 flex flex-col justify-between group relative overflow-hidden backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#053a4b]/95 to-[#00376d]/95 border-cyan-500/70 hover:border-cyan-400 shadow-2xl shadow-slate-950/50'
-                  : 'bg-white/95 border-teal-500 hover:border-teal-600 shadow-xl shadow-teal-950/10'
+                  ? 'bg-slate-800/80 border-blue-500/60 hover:border-blue-400 shadow-2xl shadow-blue-950/40'
+                  : 'bg-white/95 border-blue-500 hover:border-blue-600 shadow-xl shadow-blue-950/10'
               }`}
             >
-              <div className="absolute top-0 right-0 bg-gradient-to-r from-teal-500 via-cyan-600 to-blue-600 text-white text-[10px] font-extrabold px-3.5 py-1 rounded-bl-xl uppercase tracking-wider shadow-md">
+              <div className="absolute top-0 right-0 bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 text-white text-[10px] font-extrabold px-3.5 py-1 rounded-bl-xl uppercase tracking-wider shadow-md">
                 Rascunho Ativo
               </div>
 
               <div>
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-inner ${
-                  isDark ? 'bg-cyan-500/20 border border-cyan-400/40 text-cyan-300' : 'bg-teal-50 border border-teal-200 text-teal-700'
+                  isDark ? 'bg-blue-500/20 border border-blue-500/30 text-sky-300' : 'bg-blue-50 border border-blue-200 text-blue-700'
                 }`}>
                   <Edit3 className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-cyan-300 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-sky-300 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Continuar Edição</span>
-                  <ArrowRight className="w-4 h-4 text-cyan-400 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 text-sky-400 transition-transform group-hover:translate-x-1" />
                 </h2>
 
                 <p className={`text-xs leading-relaxed mb-4 ${
-                  isDark ? 'text-blue-100' : 'text-slate-600'
+                  isDark ? 'text-slate-300' : 'text-slate-600'
                 }`}>
                   Retome seu documento salvo localmente no computador exatamente de onde você parou.
                 </p>
 
                 {/* Perfil do Candidato Ativo */}
                 <div className={`rounded-2xl p-3 border flex items-center justify-between ${
-                  isDark ? 'bg-[#042835]/85 border-teal-500/25' : 'bg-blue-50/70 border-blue-200'
+                  isDark ? 'bg-slate-900/80 border-slate-700/80' : 'bg-blue-50/70 border-blue-200'
                 }`}>
                   <div className="flex items-center gap-2.5 truncate pr-2">
                     <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold text-xs ${
-                      isDark ? 'bg-cyan-500/25 border border-cyan-400/40 text-cyan-200' : 'bg-teal-100 border border-teal-200 text-teal-800'
+                      isDark ? 'bg-blue-500/20 border border-blue-500/30 text-blue-300' : 'bg-blue-100 border border-blue-200 text-blue-800'
                     }`}>
                       {savedCandidateName ? savedCandidateName.charAt(0).toUpperCase() : <User className="w-4 h-4" />}
                     </div>
@@ -256,7 +257,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                         {savedCandidateName || 'Candidato em Andamento'}
                       </span>
                       <span className={`text-[11px] block truncate ${
-                        isDark ? 'text-cyan-200' : 'text-blue-700 font-medium'
+                        isDark ? 'text-blue-300' : 'text-blue-700 font-medium'
                       }`}>
                         {savedCandidateRole || 'Cargo Pretendido'}
                       </span>
@@ -264,10 +265,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   </div>
 
                   <div className={`shrink-0 text-right pl-2 border-l ${
-                    isDark ? 'border-teal-500/25' : 'border-blue-200'
+                    isDark ? 'border-slate-700/80' : 'border-blue-200'
                   }`}>
                     <span className={`text-[10px] block font-medium ${
-                      isDark ? 'text-blue-200' : 'text-slate-500'
+                      isDark ? 'text-slate-400' : 'text-slate-500'
                     }`}>Score ATS</span>
                     <span className={`text-xs font-black ${atsScore >= 70 ? (isDark ? 'text-emerald-400' : 'text-emerald-600') : (isDark ? 'text-amber-400' : 'text-amber-600')}`}>
                       {atsScore}%
@@ -276,14 +277,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 </div>
               </div>
 
-              {/* Botões de Ação do Rascunho em Tom Harmonioso Azul/Ciano */}
+              {/* Botões de Ação do Rascunho */}
               <div className={`mt-5 pt-3 border-t flex flex-col sm:flex-row items-stretch sm:items-center gap-2 ${
-                isDark ? 'border-white/15' : 'border-slate-200'
+                isDark ? 'border-slate-700/60' : 'border-slate-200'
               }`}>
                 <button
                   type="button"
                   onClick={onContinue}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-md shadow-cyan-950/40 border border-cyan-300/30 transition-all cursor-pointer active:scale-95"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white text-xs font-bold shadow-md shadow-blue-500/25 border border-sky-300/30 transition-all cursor-pointer active:scale-95"
                 >
                   <span>Continuar Edição</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -295,12 +296,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     onClick={onViewCV}
                     className={`flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-xs font-bold transition-all cursor-pointer active:scale-95 ${
                       isDark
-                        ? 'bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40 text-cyan-200'
-                        : 'bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-700'
+                        ? 'bg-slate-800 hover:bg-slate-700/90 border border-slate-700/80 text-slate-200 hover:text-white'
+                        : 'bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700'
                     }`}
                     title="Abrir diretamente no Modo Visualização"
                   >
-                    <Eye className="w-3.5 h-3.5 text-cyan-400" />
+                    <Eye className="w-3.5 h-3.5 text-sky-400" />
                     <span>Modo Visualização</span>
                   </button>
                 )}
@@ -312,43 +313,43 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               onClick={onStartNew}
               className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#053a4b]/95 to-[#00376d]/95 border-cyan-500/70 hover:border-cyan-400 shadow-2xl shadow-slate-950/50'
-                  : 'bg-white/95 border-teal-500 hover:border-teal-600 shadow-xl shadow-teal-950/10'
+                  ? 'bg-slate-800/80 border-blue-500/60 hover:border-blue-400 shadow-2xl shadow-blue-950/40'
+                  : 'bg-white/95 border-blue-500 hover:border-blue-600 shadow-xl shadow-blue-950/10'
               }`}
             >
               <div>
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-inner ${
-                  isDark ? 'bg-cyan-500/20 border border-cyan-400/40 text-cyan-300' : 'bg-teal-50 border border-teal-200 text-teal-700'
+                  isDark ? 'bg-blue-500/20 border border-blue-500/30 text-sky-300' : 'bg-blue-50 border border-blue-200 text-blue-700'
                 }`}>
                   <FilePlus className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-cyan-300 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-sky-300 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Criar Novo Currículo</span>
-                  <ArrowRight className="w-4 h-4 text-cyan-400 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 text-sky-400 transition-transform group-hover:translate-x-1" />
                 </h2>
 
                 <p className={`text-xs leading-relaxed ${
-                  isDark ? 'text-blue-100' : 'text-slate-600'
+                  isDark ? 'text-slate-300' : 'text-slate-600'
                 }`}>
                   Inicie um documento limpo do zero com auxílio passo a passo, recomendações de termos técnicos e checagem de qualidade em tempo real.
                 </p>
               </div>
 
               <div className={`mt-6 pt-3 border-t flex items-center justify-between ${
-                isDark ? 'border-white/15' : 'border-slate-200'
+                isDark ? 'border-slate-700/60' : 'border-slate-200'
               }`}>
                 <button
                   type="button"
                   onClick={onStartNew}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-cyan-950/40 border border-cyan-300/30 transition-all cursor-pointer active:scale-95"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-bold text-xs shadow-md shadow-blue-500/25 border border-sky-300/30 transition-all cursor-pointer active:scale-95"
                 >
                   <span>Começar Agora</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-                <span className={`text-[11px] font-medium ${isDark ? 'text-cyan-200' : 'text-teal-700'}`}>100% Guiado</span>
+                <span className={`text-[11px] font-medium ${isDark ? 'text-sky-300' : 'text-blue-700'}`}>100% Guiado</span>
               </div>
             </div>
           )}
@@ -359,45 +360,49 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               onClick={onStartNew}
               className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#06313d]/85 to-[#00326b]/85 hover:from-[#083c4b]/90 hover:to-[#003d80]/90 border-white/15 hover:border-cyan-400/60 shadow-lg shadow-slate-950/40'
-                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-teal-400/60 shadow-lg shadow-blue-900/5'
+                  ? 'bg-slate-800/70 hover:bg-slate-800/90 border-slate-700/70 hover:border-blue-500/40 shadow-xl shadow-slate-950/40'
+                  : 'bg-white/95 hover:bg-white border-slate-200 hover:border-blue-400/60 shadow-lg shadow-blue-900/5'
               }`}
             >
               <div>
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform ${
-                  isDark ? 'bg-[#052b36] border border-teal-500/30 text-teal-200' : 'bg-blue-50 border border-blue-200 text-blue-700'
+                  isDark ? 'bg-slate-700/60 border border-slate-600/60 text-blue-300' : 'bg-slate-100 border border-slate-200 text-slate-700'
                 }`}>
                   <FilePlus className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-cyan-300 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-sky-300 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Iniciar Novo do Zero</span>
                   <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                    isDark ? 'text-blue-200 group-hover:text-cyan-300' : 'text-slate-400 group-hover:text-teal-600'
+                    isDark ? 'text-slate-400 group-hover:text-sky-300' : 'text-slate-400 group-hover:text-blue-600'
                   }`} />
                 </h2>
 
                 <p className={`text-xs leading-relaxed ${
-                  isDark ? 'text-blue-100' : 'text-slate-600'
+                  isDark ? 'text-slate-300' : 'text-slate-600'
                 }`}>
                   Limpa os campos e inicia um novo currículo em branco para outro objetivo, área de atuação ou vaga específica.
                 </p>
               </div>
 
               <div className={`mt-6 pt-3 border-t flex items-center justify-between ${
-                isDark ? 'border-white/15' : 'border-slate-200'
+                isDark ? 'border-slate-700/60' : 'border-slate-200'
               }`}>
                 <button
                   type="button"
                   onClick={onStartNew}
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-500 hover:via-cyan-500 hover:to-blue-500 text-white font-bold text-xs shadow-sm shadow-cyan-950/30 border border-cyan-400/20 transition-all cursor-pointer active:scale-95"
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-bold text-xs shadow-xs transition-all cursor-pointer active:scale-95 ${
+                    isDark
+                      ? 'bg-slate-800 hover:bg-slate-750 text-slate-200 hover:text-white border border-slate-700'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+                  }`}
                 >
                   <span>Iniciar em Branco</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-                <span className={`text-[11px] font-medium ${isDark ? 'text-cyan-200' : 'text-slate-500'}`}>Em Branco</span>
+                <span className={`text-[11px] font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Em Branco</span>
               </div>
             </div>
           ) : (
@@ -405,45 +410,49 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               onClick={onLoadExample}
               className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#06313d]/85 to-[#00326b]/85 hover:from-[#083c4b]/90 hover:to-[#003d80]/90 border-white/15 hover:border-emerald-400/60 shadow-lg shadow-slate-950/40'
-                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-emerald-400/60 shadow-lg shadow-blue-900/5'
+                  ? 'bg-slate-800/70 hover:bg-slate-800/90 border-slate-700/70 hover:border-emerald-500/40 shadow-xl shadow-slate-950/40'
+                  : 'bg-white/95 hover:bg-white border-slate-200 hover:border-emerald-400/60 shadow-lg shadow-blue-900/5'
               }`}
             >
               <div>
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform ${
-                  isDark ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300' : 'bg-emerald-50 border border-emerald-200 text-emerald-600'
+                  isDark ? 'bg-emerald-500/20 border border-emerald-500/30 text-emerald-300' : 'bg-emerald-50 border border-emerald-200 text-emerald-600'
                 }`}>
                   <FileCheck className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-emerald-400 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-emerald-300 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Carregar Exemplo Pronto</span>
                   <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                    isDark ? 'text-blue-200 group-hover:text-emerald-300' : 'text-slate-400 group-hover:text-emerald-600'
+                    isDark ? 'text-slate-400 group-hover:text-emerald-300' : 'text-slate-400 group-hover:text-emerald-600'
                   }`} />
                 </h2>
 
                 <p className={`text-xs leading-relaxed ${
-                  isDark ? 'text-blue-100' : 'text-slate-600'
+                  isDark ? 'text-slate-300' : 'text-slate-600'
                 }`}>
                   Explore um modelo 100% preenchido com pontuação máxima no ATS para se inspirar e apenas trocar seus dados pessoais.
                 </p>
               </div>
 
               <div className={`mt-6 pt-3 border-t flex items-center justify-between ${
-                isDark ? 'border-white/15' : 'border-slate-200'
+                isDark ? 'border-slate-700/60' : 'border-slate-200'
               }`}>
                 <button
                   type="button"
                   onClick={onLoadExample}
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500 text-white font-bold text-xs shadow-sm shadow-teal-950/30 border border-teal-400/20 transition-all cursor-pointer active:scale-95"
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-bold text-xs shadow-xs transition-all cursor-pointer active:scale-95 ${
+                    isDark
+                      ? 'bg-slate-800 hover:bg-slate-750 text-slate-200 hover:text-white border border-slate-700'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+                  }`}
                 >
                   <span>Ver Modelo Pronto</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-                <span className={`text-[11px] font-medium ${isDark ? 'text-emerald-300' : 'text-emerald-600'}`}>Score 100% ATS</span>
+                <span className={`text-[11px] font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>Score 100% ATS</span>
               </div>
             </div>
           )}
@@ -454,45 +463,49 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               onClick={onLoadExample}
               className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
                 isDark
-                  ? 'bg-gradient-to-br from-[#06313d]/85 to-[#00326b]/85 hover:from-[#083c4b]/90 hover:to-[#003d80]/90 border-white/15 hover:border-emerald-400/60 shadow-lg shadow-slate-950/40'
-                  : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-emerald-400/60 shadow-lg shadow-blue-900/5'
+                  ? 'bg-slate-800/70 hover:bg-slate-800/90 border-slate-700/70 hover:border-emerald-500/40 shadow-xl shadow-slate-950/40'
+                  : 'bg-white/95 hover:bg-white border-slate-200 hover:border-emerald-400/60 shadow-lg shadow-blue-900/5'
               }`}
             >
               <div>
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform ${
-                  isDark ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300' : 'bg-emerald-50 border border-emerald-200 text-emerald-600'
+                  isDark ? 'bg-emerald-500/20 border border-emerald-500/30 text-emerald-300' : 'bg-emerald-50 border border-emerald-200 text-emerald-600'
                 }`}>
                   <FileCheck className="w-6 h-6" />
                 </div>
 
-                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-emerald-400 transition-colors flex items-center gap-2 ${
+                <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-emerald-300 transition-colors flex items-center gap-2 ${
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}>
                   <span>Carregar Exemplo Pronto</span>
                   <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                    isDark ? 'text-blue-200 group-hover:text-emerald-300' : 'text-slate-400 group-hover:text-emerald-600'
+                    isDark ? 'text-slate-400 group-hover:text-emerald-300' : 'text-slate-400 group-hover:text-emerald-600'
                   }`} />
                 </h2>
 
                 <p className={`text-xs leading-relaxed ${
-                  isDark ? 'text-blue-100' : 'text-slate-600'
+                  isDark ? 'text-slate-300' : 'text-slate-600'
                 }`}>
                   Carrega um currículo completo de referência com nota máxima em ATS para analisar a estrutura e os textos sugeridos.
                 </p>
               </div>
 
               <div className={`mt-6 pt-3 border-t flex items-center justify-between ${
-                isDark ? 'border-white/15' : 'border-slate-200'
+                isDark ? 'border-slate-700/60' : 'border-slate-200'
               }`}>
                 <button
                   type="button"
                   onClick={onLoadExample}
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500 text-white font-bold text-xs shadow-sm shadow-teal-950/30 border border-teal-400/20 transition-all cursor-pointer active:scale-95"
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-bold text-xs shadow-xs transition-all cursor-pointer active:scale-95 ${
+                    isDark
+                      ? 'bg-slate-800 hover:bg-slate-750 text-slate-200 hover:text-white border border-slate-700'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+                  }`}
                 >
                   <span>Modelo de Referência</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-                <span className={`text-[11px] font-medium ${isDark ? 'text-emerald-300' : 'text-emerald-600'}`}>Pronto para Edição</span>
+                <span className={`text-[11px] font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>Pronto para Edição</span>
               </div>
             </div>
           )}
@@ -502,45 +515,49 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             onClick={handleTriggerUpload}
             className={`p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between group backdrop-blur-md ${
               isDark
-                ? 'bg-gradient-to-br from-[#06313d]/85 to-[#00326b]/85 hover:from-[#083c4b]/90 hover:to-[#003d80]/90 border-white/15 hover:border-purple-400/60 shadow-lg shadow-slate-950/40'
-                : 'bg-white/95 hover:bg-white border-blue-200/80 hover:border-purple-400/60 shadow-lg shadow-blue-900/5'
+                ? 'bg-slate-800/70 hover:bg-slate-800/90 border-slate-700/70 hover:border-indigo-500/40 shadow-xl shadow-slate-950/40'
+                : 'bg-white/95 hover:bg-white border-slate-200 hover:border-indigo-400/60 shadow-lg shadow-blue-900/5'
             }`}
           >
             <div>
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform ${
-                isDark ? 'bg-purple-500/20 border border-purple-500/40 text-purple-300' : 'bg-purple-50 border border-purple-200 text-purple-600'
+                isDark ? 'bg-indigo-500/20 border border-indigo-500/30 text-indigo-300' : 'bg-indigo-50 border border-indigo-200 text-indigo-600'
               }`}>
                 <Upload className="w-6 h-6" />
               </div>
 
-              <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-purple-400 transition-colors flex items-center gap-2 ${
+              <h2 className={`text-base sm:text-lg font-bold mb-1 group-hover:text-indigo-300 transition-colors flex items-center gap-2 ${
                 isDark ? 'text-white' : 'text-slate-900'
               }`}>
                 <span>Importar Arquivo (.JSON)</span>
                 <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                  isDark ? 'text-blue-200 group-hover:text-purple-300' : 'text-slate-400 group-hover:text-purple-600'
+                  isDark ? 'text-slate-400 group-hover:text-indigo-300' : 'text-slate-400 group-hover:text-indigo-600'
                 }`} />
               </h2>
 
               <p className={`text-xs leading-relaxed ${
-                isDark ? 'text-blue-100' : 'text-slate-600'
+                isDark ? 'text-slate-300' : 'text-slate-600'
               }`}>
                 Já exportou seu backup anteriormente? Carregue seu arquivo JSON para restaurar todos os dados com um clique.
               </p>
             </div>
 
             <div className={`mt-6 pt-3 border-t flex items-center justify-between ${
-              isDark ? 'border-white/15' : 'border-slate-200'
+              isDark ? 'border-slate-700/60' : 'border-slate-200'
             }`}>
               <button
                 type="button"
                 onClick={handleTriggerUpload}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-500 hover:via-cyan-500 hover:to-blue-500 text-white font-bold text-xs shadow-sm shadow-cyan-950/30 border border-cyan-400/20 transition-all cursor-pointer active:scale-95"
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-bold text-xs shadow-xs transition-all cursor-pointer active:scale-95 ${
+                  isDark
+                    ? 'bg-slate-800 hover:bg-slate-750 text-slate-200 hover:text-white border border-slate-700'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+                }`}
               >
                 <Upload className="w-3.5 h-3.5" />
                 <span>Restaurar Backup</span>
               </button>
-              <span className={`text-[11px] font-medium ${isDark ? 'text-blue-200' : 'text-slate-500'}`}>Arquivo Local</span>
+              <span className={`text-[11px] font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Arquivo Local</span>
             </div>
 
             <input
@@ -557,37 +574,37 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         {/* 4. DOCK DE RECURSOS INTEGRADOS (App Mini-Modules) */}
         <div className="max-w-4xl mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5 pt-1 sm:pt-2">
           
-          <div className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors ${
+          <div className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors backdrop-blur-md ${
             isDark
-              ? 'bg-[#06384d]/70 border border-white/15 hover:bg-[#08455e]/80'
-              : 'bg-white/90 border border-blue-200/80 hover:bg-white shadow-sm'
+              ? 'bg-slate-800/70 border border-slate-700/70 hover:bg-slate-800/90 hover:border-emerald-500/40'
+              : 'bg-white/90 border border-slate-200 hover:bg-white shadow-sm'
           }`}>
             <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 border ${
-              isDark ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-emerald-50 text-emerald-600 border-emerald-200'
+              isDark ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : 'bg-emerald-50 text-emerald-600 border-emerald-200'
             }`}>
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
               <h3 className={`text-xs font-bold mb-0.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>Aprovado em ATS</h3>
-              <p className={`text-[11px] leading-tight ${isDark ? 'text-blue-100' : 'text-slate-600'}`}>
+              <p className={`text-[11px] leading-tight ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                 Estrutura calibrada para nunca ser descartada por robôs de triagem de RH.
               </p>
             </div>
           </div>
 
-          <div className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors ${
+          <div className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors backdrop-blur-md ${
             isDark
-              ? 'bg-[#06384d]/70 border border-white/15 hover:bg-[#08455e]/80'
-              : 'bg-white/90 border border-blue-200/80 hover:bg-white shadow-sm'
+              ? 'bg-slate-800/70 border border-slate-700/70 hover:bg-slate-800/90 hover:border-sky-500/40'
+              : 'bg-white/90 border border-slate-200 hover:bg-white shadow-sm'
           }`}>
             <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 border ${
-              isDark ? 'bg-sky-400/20 text-sky-200 border-sky-400/40' : 'bg-sky-50 text-sky-600 border-sky-200'
+              isDark ? 'bg-sky-500/20 text-sky-300 border-sky-500/30' : 'bg-sky-50 text-sky-600 border-sky-200'
             }`}>
               <Download className="w-4 h-4" />
             </div>
             <div>
               <h3 className={`text-xs font-bold mb-0.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>PDF & Word (.DOC)</h3>
-              <p className={`text-[11px] leading-tight ${isDark ? 'text-blue-100' : 'text-slate-600'}`}>
+              <p className={`text-[11px] leading-tight ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                 Gere PDF em alta resolução A4 e Word com coluna lateral ou clássico ATS.
               </p>
             </div>
@@ -595,14 +612,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
           <div
             onClick={onGoToLinkedInGuide}
-            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors cursor-pointer group ${
+            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors cursor-pointer group backdrop-blur-md ${
               isDark
-                ? 'bg-[#06384d]/70 border border-white/15 hover:border-indigo-400/60 hover:bg-[#08455e]/80'
-                : 'bg-white/90 border border-blue-200/80 hover:border-indigo-400/60 hover:bg-white shadow-sm'
+                ? 'bg-slate-800/70 border border-slate-700/70 hover:border-indigo-400/60 hover:bg-slate-800/90'
+                : 'bg-white/90 border border-slate-200 hover:border-indigo-400/60 hover:bg-white shadow-sm'
             }`}
           >
             <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 border group-hover:scale-105 transition-transform ${
-              isDark ? 'bg-indigo-400/20 text-indigo-200 border-indigo-400/40' : 'bg-indigo-50 text-indigo-600 border-indigo-200'
+              isDark ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' : 'bg-indigo-50 text-indigo-600 border-indigo-200'
             }`}>
               <Share2 className="w-4 h-4" />
             </div>
@@ -613,7 +630,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <span>Guia LinkedIn</span>
                 <ChevronRight className="w-3 h-3 text-indigo-400" />
               </h3>
-              <p className={`text-[11px] leading-tight ${isDark ? 'text-blue-100' : 'text-slate-600'}`}>
+              <p className={`text-[11px] leading-tight ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                 Títulos estratégicos e campo 'Sobre' otimizados para recrutadores.
               </p>
             </div>
@@ -621,25 +638,25 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
           <div
             onClick={() => setShowInterviewModal(true)}
-            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors cursor-pointer group shadow-lg ${
+            className={`flex items-start gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl transition-colors cursor-pointer group backdrop-blur-md shadow-lg ${
               isDark
-                ? 'bg-[#06384d]/70 border border-teal-500/40 hover:border-cyan-400 hover:bg-[#08455e]/90 shadow-slate-950/40'
-                : 'bg-white/90 border border-teal-300 hover:border-teal-500 hover:bg-white shadow-teal-950/5'
+                ? 'bg-slate-800/70 border border-blue-500/40 hover:border-sky-400 hover:bg-slate-800/90 shadow-blue-950/20'
+                : 'bg-white/90 border border-blue-200 hover:border-blue-400 hover:bg-white shadow-blue-950/5'
             }`}
           >
             <div className={`p-2 sm:p-2.5 rounded-xl shrink-0 border group-hover:scale-105 transition-transform ${
-              isDark ? 'bg-teal-500/20 text-teal-300 border-teal-500/40' : 'bg-teal-50 text-teal-600 border-teal-200'
+              isDark ? 'bg-blue-500/20 text-blue-300 border-blue-500/30' : 'bg-blue-50 text-blue-600 border-blue-200'
             }`}>
               <MessageSquare className="w-4 h-4" />
             </div>
             <div>
               <h3 className={`text-xs font-bold mb-0.5 flex items-center gap-1 ${
-                isDark ? 'text-white group-hover:text-cyan-300' : 'text-slate-900 group-hover:text-teal-700'
+                isDark ? 'text-white group-hover:text-sky-300' : 'text-slate-900 group-hover:text-blue-700'
               }`}>
                 <span>Dicas de Entrevista</span>
-                <ChevronRight className="w-3 h-3 text-cyan-400" />
+                <ChevronRight className="w-3 h-3 text-sky-400" />
               </h3>
-              <p className={`text-[11px] leading-tight ${isDark ? 'text-blue-100' : 'text-slate-600'}`}>
+              <p className={`text-[11px] leading-tight ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                 Perguntas clássicas, respostas STAR e checklist para a vaga.
               </p>
             </div>
@@ -647,12 +664,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
         </div>
 
-        {/* Botão de Destaque para Acessar Dicas de Entrevista em Tom Azul/Ciano */}
+        {/* Botão de Destaque para Acessar Dicas de Entrevista */}
         <div className="flex justify-center pt-4 sm:pt-5 w-full">
           <button
             type="button"
             onClick={() => setShowInterviewModal(true)}
-            className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white font-black text-xs sm:text-sm shadow-xl shadow-cyan-950/50 border border-cyan-300/40 transition-all cursor-pointer group active:scale-95 w-full sm:w-auto text-center"
+            className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-black text-xs sm:text-sm shadow-xl shadow-blue-500/25 border border-sky-300/30 transition-all cursor-pointer group active:scale-95 w-full sm:w-auto text-center"
           >
             <MessageSquare className="w-4 h-4 text-white group-hover:scale-110 transition-transform shrink-0" />
             <span>Acessar Guia & Dicas de Entrevista de Emprego</span>
@@ -665,18 +682,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       {/* MODAL EXCLUSIVO: DICAS ESTRATÉGICAS PARA ENTREVISTAS DE EMPREGO */}
       {showInterviewModal && (
         <div className={`fixed inset-0 z-50 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto ${
-          isDark ? 'bg-[#031c26]/85' : 'bg-slate-900/60'
+          isDark ? 'bg-slate-950/80' : 'bg-slate-900/60'
         }`}>
           <div className={`border rounded-2xl sm:rounded-3xl w-full max-w-4xl max-h-[94vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 my-auto ${
-            isDark ? 'bg-[#063442] border-white/20 text-white' : 'bg-white border-slate-200 text-slate-900'
+            isDark ? 'bg-slate-900 border-slate-700/80 text-white' : 'bg-white border-slate-200 text-slate-900'
           }`}>
             
             {/* Cabeçalho do Modal */}
             <div className={`p-4 sm:p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shrink-0 ${
-              isDark ? 'border-white/15 bg-[#052c38]/95' : 'border-slate-200 bg-slate-50/95'
+              isDark ? 'border-slate-800 bg-slate-900/95' : 'border-slate-200 bg-slate-50/95'
             }`}>
               <div className="space-y-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 text-[11px] font-semibold">
+                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold ${
+                  isDark ? 'bg-blue-500/20 border border-blue-500/30 text-blue-300' : 'bg-blue-50 border border-blue-200 text-blue-700'
+                }`}>
                   <MessageSquare className="w-3.5 h-3.5" />
                   <span>Preparação para Processos Seletivos</span>
                 </div>
@@ -686,7 +705,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   <span>Dicas Estratégicas para Entrevistas de Emprego</span>
                 </h2>
                 <p className={`text-xs max-w-xl leading-relaxed ${
-                  isDark ? 'text-blue-100' : 'text-slate-600'
+                  isDark ? 'text-slate-400' : 'text-slate-600'
                 }`}>
                   Aprenda a estruturar respostas de alto impacto, contornar as perguntas mais difíceis e demonstrar segurança perante o recrutador.
                 </p>
@@ -700,7 +719,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     if (hasSavedCV) onContinue();
                     else onStartNew();
                   }}
-                  className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 hover:from-teal-400 hover:via-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-cyan-950/40 border border-cyan-300/30 transition-all cursor-pointer active:scale-95"
+                  className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-linear-to-r from-sky-400 via-blue-500 to-indigo-500 hover:from-sky-300 hover:via-blue-400 hover:to-indigo-400 text-white font-bold text-xs shadow-md shadow-blue-500/25 border border-sky-300/30 transition-all cursor-pointer active:scale-95"
                 >
                   <span>{hasSavedCV ? 'Editar Meu Currículo' : 'Criar Currículo Agora'}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -710,7 +729,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   type="button"
                   onClick={() => setShowInterviewModal(false)}
                   className={`p-2 rounded-xl border transition-colors cursor-pointer ${
-                    isDark ? 'bg-[#073c4d] hover:bg-[#09485c] text-white border-white/20' : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200'
+                    isDark ? 'bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white border-slate-700' : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200'
                   }`}
                   title="Fechar"
                 >
@@ -723,14 +742,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-5 sm:space-y-6">
               
               {/* Seletor de Abas da Seção de Entrevista */}
-              <div className="flex items-center gap-2 border-b border-blue-900/60 pb-3 overflow-x-auto no-scrollbar">
+              <div className={`flex items-center gap-2 border-b pb-3 overflow-x-auto no-scrollbar ${
+                isDark ? 'border-slate-800' : 'border-slate-200'
+              }`}>
             <button
               type="button"
               onClick={() => setActiveInterviewTab('questions')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                 activeInterviewTab === 'questions'
-                  ? 'bg-cyan-500/20 text-cyan-200 border border-cyan-400/40 shadow-xs'
-                  : 'text-slate-300 hover:text-white hover:bg-blue-950/60'
+                  ? isDark ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40 shadow-xs' : 'bg-blue-50 text-blue-700 border border-blue-200 shadow-xs'
+                  : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
               <HelpCircle className="w-3.5 h-3.5" />
@@ -742,8 +763,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               onClick={() => setActiveInterviewTab('checklist')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                 activeInterviewTab === 'checklist'
-                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-xs'
-                  : 'text-slate-300 hover:text-white hover:bg-blue-950/60'
+                  ? isDark ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-xs' : 'bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs'
+                  : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -755,8 +776,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
               onClick={() => setActiveInterviewTab('star')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                 activeInterviewTab === 'star'
-                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-xs'
-                  : 'text-slate-300 hover:text-white hover:bg-blue-950/60'
+                  ? isDark ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-xs' : 'bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-xs'
+                  : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
               <Target className="w-3.5 h-3.5" />
@@ -970,17 +991,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
         {/* Rodapé do Modal */}
         <div className={`p-4 px-6 border-t flex items-center justify-between text-xs shrink-0 ${
-          isDark ? 'border-white/15 bg-[#052c38] text-blue-100' : 'border-slate-200 bg-slate-100 text-slate-600'
+          isDark ? 'border-slate-800 bg-slate-900/95 text-slate-400' : 'border-slate-200 bg-slate-100 text-slate-600'
         }`}>
           <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-            Guia de Entrevistas atualizado para processos seletivos
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Guia de Entrevistas atualizado para processos seletivos</span>
           </span>
           <button
             type="button"
             onClick={() => setShowInterviewModal(false)}
             className={`px-3.5 py-1.5 rounded-xl border font-medium transition-colors cursor-pointer ${
-              isDark ? 'bg-[#073c4d] hover:bg-[#09485c] border-white/20 text-white' : 'bg-white hover:bg-slate-200 border-slate-300 text-slate-700'
+              isDark ? 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200 hover:text-white' : 'bg-white hover:bg-slate-200 border-slate-300 text-slate-700'
             }`}
           >
             Voltar à Página Inicial
@@ -993,7 +1014,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* 5. RODAPÉ INSTITUCIONAL COM ASSINATURA DO DESENVOLVEDOR */}
       <footer className={`relative z-20 border-t py-4 sm:py-5 text-xs transition-colors ${
-        isDark ? 'border-blue-500/20 bg-[#002f6c]/95 text-blue-100' : 'border-blue-200/80 bg-white/95 text-slate-600 shadow-xs'
+        isDark ? 'border-slate-800/80 bg-slate-950/90 text-slate-400' : 'border-slate-200/80 bg-white/95 text-slate-600 shadow-xs'
       }`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           
@@ -1001,18 +1022,18 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             <AppLogo size="sm" showText={false} isLight={isDark} />
             <div className={`flex items-center gap-1.5 text-xs ${isDark ? 'text-white' : 'text-slate-800'}`}>
               <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Connect Currículo AI</span>
-              <span className={isDark ? "text-blue-300" : "text-slate-400"}>·</span>
-              <span>Desenvolvido por <strong className="text-cyan-400 font-semibold">Elielson Mourão</strong></span>
+              <span className={isDark ? "text-slate-600" : "text-slate-400"}>·</span>
+              <span>Desenvolvido por <strong className="text-blue-400 font-semibold">Elielson Mourão</strong></span>
             </div>
           </div>
 
-          <div className={`flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 text-[11px] ${isDark ? 'text-blue-200' : 'text-slate-500'}`}>
+          <div className={`flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4 text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
             <span>Privacidade Local (100% no seu navegador)</span>
-            <span className={isDark ? "text-blue-400" : "text-slate-300"}>·</span>
+            <span className={isDark ? "text-slate-700" : "text-slate-300"}>·</span>
             <button
               type="button"
               onClick={onGoToLinkedInGuide}
-              className="text-cyan-400 hover:text-cyan-300 transition-colors font-semibold cursor-pointer"
+              className="text-sky-400 hover:text-sky-300 transition-colors font-semibold cursor-pointer"
             >
               Otimizador LinkedIn
             </button>
